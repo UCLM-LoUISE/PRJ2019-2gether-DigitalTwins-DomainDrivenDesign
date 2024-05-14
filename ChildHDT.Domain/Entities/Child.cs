@@ -14,14 +14,23 @@ namespace ChildHDT.Domain.Entities
 
         // BUILDER/S
 
-        public Child() { 
+        public Child(string name, string surname, int age, string classroom) { 
             //Por factorizar
+            Name = name;
+            Surname = surname;
+            Age = age;
+            Classroom = classroom;
         }
 
         // METHODS
         public void StressLevelShotUp()
         {
             this.Role.ManageStressLevelShotUp();
+        }
+
+        public void AssignRole(Role role)
+        { 
+            this.Role = role; 
         }
 
     }
