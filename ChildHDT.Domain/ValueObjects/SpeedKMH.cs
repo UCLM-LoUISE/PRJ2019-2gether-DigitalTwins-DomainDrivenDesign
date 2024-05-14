@@ -9,7 +9,7 @@ namespace ChildHDT.Domain.ValueObjects
     public class SpeedKMH
     {
         // ATTRIBUTES
-        public double value;
+        protected readonly double value;
 
         // METHODS
         public SpeedKMH(double distanceInKmPerHour) 

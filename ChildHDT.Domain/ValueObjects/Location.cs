@@ -9,14 +9,19 @@ namespace ChildHDT.Domain.ValueObjects
     public class Location
     {
         // ATTRIBUTES
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        
+        protected readonly double Latitude;
+        protected readonly double Longitude; 
+
         // METHODS
         public Location(double latitude, double longitude)
         {
             Latitude = latitude;
             Longitude = longitude;
+        }
+
+        public (double, double) GetCoordinates()
+        {
+            return (Latitude, Longitude);
         }
     }
 }

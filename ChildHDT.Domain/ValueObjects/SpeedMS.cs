@@ -9,8 +9,8 @@ namespace ChildHDT.Domain.ValueObjects
     public class SpeedMS
     {
         // ATTRIBUTES
-        public double value;
-
+        protected readonly double value;
+        
         // METHODS
         public SpeedMS(double distanceInMetersPerSecond) {
             value = distanceInMetersPerSecond;
@@ -21,7 +21,5 @@ namespace ChildHDT.Domain.ValueObjects
             double result = (distanceInMetersPerSecond * 3600) / 1000;
             return new SpeedKMH(result);
         }
-
-
     }
 }

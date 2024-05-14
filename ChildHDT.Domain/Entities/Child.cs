@@ -11,8 +11,8 @@ namespace ChildHDT.Domain.Entities
         public int Age { get; set; }
         public string Classroom { get; set; }
         public Role Role { get; set; }
-
-        // BUILDER/S
+        
+        // METHODS
 
         public Child(string name, string surname, int age, string classroom) { 
             //Por factorizar
@@ -22,7 +22,7 @@ namespace ChildHDT.Domain.Entities
             Classroom = classroom;
         }
 
-        // METHODS
+   
         public void StressLevelShotUp()
         {
             this.Role.ManageStressLevelShotUp();
