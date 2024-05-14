@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
 {
-    internal class Messaging
+    public class Messaging
     {
+        public 
     }
 }
