@@ -10,10 +10,10 @@ namespace ChildHDT.Domain.ValueObjects
     {
         // ATTRIBUTES
         protected readonly double value;
-        protected readonly double level;
+        protected readonly string level;
 
         // MEHTHODS
-        public Stress(double value, double level)
+        public Stress(double value, string level)
         {
             this.value = value;
             this.level = level;
