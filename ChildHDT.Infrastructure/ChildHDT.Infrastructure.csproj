@@ -14,4 +14,8 @@
     <Folder Include="EventSourcing\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MQTTnet" Version="4.3.4.1084" />
+  </ItemGroup>
+
 </Project>

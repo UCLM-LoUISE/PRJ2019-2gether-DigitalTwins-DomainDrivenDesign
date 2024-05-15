@@ -9,8 +9,8 @@ namespace ChildHDT.Domain.ValueObjects
     public class Location
     {
         // ATTRIBUTES
-        protected readonly double Latitude;
-        protected readonly double Longitude; 
+        public readonly double Latitude;
+        public readonly double Longitude; 
 
         // METHODS
         public Location(double latitude, double longitude)
