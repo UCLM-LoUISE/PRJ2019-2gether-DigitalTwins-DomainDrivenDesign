@@ -1,75 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
-using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Protocol;
-using MQTTnet.Server;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
 {
     public class Messaging
     {
-        private IMqttClient mqttClient;
-        // METHODS
+        private IConnection connection;
+        private IModel channel;
 
-        public Messaging() 
+        public Messaging()
         {
-            mqttClient = new MqttFactory().CreateMqttClient();
+            var factory = new ConnectionFactory() { HostName = "localhost"};
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
         }
 
-        public async Task Publish(Child publisher, string queue, string message)
+        public Task Publish(Child publisher, string queueInfo, string message)
         {
-            var topic = publisher.Name + "/" + queue;
+            var queue = publisher.Name + "/" + queueInfo;
 
-            var options = new MqttClientOptionsBuilder()
-                .WithClientId(publisher.Id.ToString())
-                .WithTcpServer("localhost", 1883)
-                .Build();
+            channel.QueueDeclare(queue: queue, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            var body = Encoding.UTF8.GetBytes(message);
 
-            var connectionResult = await mqttClient.ConnectAsync(options);
+            channel.BasicPublish(exchange: "",
+                                 routingKey: queue,
+                                 basicProperties: null,
+                                 body: body);
 
-            if (!connectionResult.Equals(MqttClientConnectResultCode.Success)) { 
-                //ERROR
-            }
-
-            var mqttMessage = new MqttApplicationMessageBuilder()
-                .WithTopic(topic)
-                .WithPayload(message)
-                .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-                .WithRetainFlag()
-                .Build();
-
-            await mqttClient.PublishAsync(mqttMessage);
+            Console.WriteLine($"[x] Sent '{message}'");
+            return Task.CompletedTask;
         }
 
-        public async Task Subscribe(Child subscriber, string queue) 
+        public async Task Subscribe(Child publisher, string queueInfo)
         {
-            var topic = subscriber.Name + "/" + queue;
+            var queue = publisher.Name + "/" + queueInfo;
 
-            var options = new MqttClientOptionsBuilder()
-                .WithClientId(subscriber.Id.ToString())
-                .WithTcpServer("localhost", 1883)
-                .Build();
+            channel.QueueDeclare(queue: queue, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            var consumer = new EventingBasicConsumer(channel);
 
-            var connectionResult = await mqttClient.ConnectAsync(options);
-
-            if (!connectionResult.Equals(MqttClientConnectResultCode.Success))
+            consumer.Received += (model, ea) =>
             {
-                //ERROR
-            }
-
-            await mqttClient.SubscribeAsync(topic);
-
-            mqttClient.ApplicationMessageReceivedAsync += e =>
-            {
-                Console.WriteLine($"Received message: {Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment)}");
-                return Task.CompletedTask;
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                Console.WriteLine($"[x] Received '{message}'");
             };
+            channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
 
+            await Task.CompletedTask;
         }
     }
 }

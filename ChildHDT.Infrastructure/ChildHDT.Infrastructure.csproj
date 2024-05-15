@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="MQTTnet" Version="4.3.4.1084" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
 
 </Project>

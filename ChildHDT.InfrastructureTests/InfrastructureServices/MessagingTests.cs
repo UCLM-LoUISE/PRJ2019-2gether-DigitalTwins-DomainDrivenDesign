@@ -13,15 +13,18 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Tests
     [TestClass()]
     public class MessagingTests
     {
+
+
+        private Child publisher = new Child(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
+
         [TestMethod()]
         public async Task SubscribeTestAsync()
         {
             // ARRANGE
             var messaging = new Messaging();
-            var subscriber = new Child(name: "Subscriber", surname: "Unit", age: 12, classroom: "3ºA");
 
             // ACT
-            await messaging.Subscribe(subscriber, "test/topic");
+            await messaging.Subscribe(publisher, "test/topic");
 
             // ASSERT
 
@@ -32,7 +35,6 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Tests
         {
             // ARRANGE
             var messaging = new Messaging();
-            var publisher = new Child(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
 
             // ACT
             await messaging.Publish(publisher, "test/topic", "TEST MESSAGE");
