@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
 using MQTTnet;
 using MQTTnet.Client;
+using MQTTnet.Protocol;
 using MQTTnet.Server;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
@@ -26,31 +27,48 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
             var options = new MqttClientOptionsBuilder()
                 .WithClientId(publisher.Id.ToString())
-                .WithTcpServer("localhost")
+                .WithTcpServer("localhost", 1883)
                 .Build();
 
-            await mqttClient.ConnectAsync(options);
+            var connectionResult = await mqttClient.ConnectAsync(options);
 
-            var messageBuilder = new MqttApplicationMessageBuilder()
+            if (!connectionResult.Equals(MqttClientConnectResultCode.Success)) { 
+                //ERROR
+            }
+
+            var mqttMessage = new MqttApplicationMessageBuilder()
                 .WithTopic(topic)
                 .WithPayload(message)
-                .WithRetainFlag();
+                .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+                .WithRetainFlag()
+                .Build();
 
-            var mqttMessage = messageBuilder.Build();
             await mqttClient.PublishAsync(mqttMessage);
         }
 
-        public async Task Subscribe(Child publisher, string queue) 
+        public async Task Subscribe(Child subscriber, string queue) 
         {
-            var topic = publisher.Name + "/" + queue;
+            var topic = subscriber.Name + "/" + queue;
 
             var options = new MqttClientOptionsBuilder()
-                .WithClientId(publisher.Id.ToString())
-                .WithTcpServer("localhost")
+                .WithClientId(subscriber.Id.ToString())
+                .WithTcpServer("localhost", 1883)
                 .Build();
 
-            await mqttClient.ConnectAsync(options);
-            await mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(topic).Build());
+            var connectionResult = await mqttClient.ConnectAsync(options);
+
+            if (!connectionResult.Equals(MqttClientConnectResultCode.Success))
+            {
+                //ERROR
+            }
+
+            await mqttClient.SubscribeAsync(topic);
+
+            mqttClient.ApplicationMessageReceivedAsync += e =>
+            {
+                Console.WriteLine($"Received message: {Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment)}");
+                return Task.CompletedTask;
+            };
 
         }
     }

@@ -5,7 +5,6 @@ namespace ChildHDT.Tests
 {
     public class TestKAN1
     {
-        [TestClass()]
         static async Task Main(string[] args)
         {
             var messaging = new Messaging();

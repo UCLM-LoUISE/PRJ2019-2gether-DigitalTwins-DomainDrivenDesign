@@ -32,7 +32,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Tests
         {
             // ARRANGE
             var messaging = new Messaging();
-            var publisher = new Child(name: "Subscriber", surname: "Unit", age: 12, classroom: "3ºA");
+            var publisher = new Child(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
 
             // ACT
             await messaging.Publish(publisher, "test/topic", "TEST MESSAGE");
