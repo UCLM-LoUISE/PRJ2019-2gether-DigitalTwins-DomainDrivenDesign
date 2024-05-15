@@ -24,7 +24,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Tests
             var messaging = new Messaging();
 
             // ACT
-            await messaging.Subscribe(publisher, "test/topic");
+            await messaging.Subscribe(publisher.Id, "test/topic");
 
             // ASSERT
 
@@ -37,7 +37,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Tests
             var messaging = new Messaging();
 
             // ACT
-            await messaging.Publish(publisher, "test/topic", "TEST MESSAGE");
+            await messaging.Publish(publisher.Id, "test/topic", "TEST MESSAGE");
 
             // ASSERT
 

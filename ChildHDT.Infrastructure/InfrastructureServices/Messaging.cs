@@ -20,9 +20,9 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             channel = connection.CreateModel();
         }
 
-        public Task Publish(Child publisher, string queueInfo, string message)
+        public Task Publish(Guid publisherId, string queueInfo, string message)
         {
-            var queue = publisher.Name + "/" + queueInfo;
+            var queue = publisherId + "/" + queueInfo;
 
             channel.QueueDeclare(queue: queue, durable: false, exclusive: false, autoDelete: false, arguments: null);
             var body = Encoding.UTF8.GetBytes(message);
@@ -36,9 +36,9 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             return Task.CompletedTask;
         }
 
-        public async Task Subscribe(Child publisher, string queueInfo)
+        public async Task Subscribe(Guid publisherId, string queueInfo)
         {
-            var queue = publisher.Name + "/" + queueInfo;
+            var queue = publisherId + "/" + queueInfo;
 
             channel.QueueDeclare(queue: queue, durable: false, exclusive: false, autoDelete: false, arguments: null);
             var consumer = new EventingBasicConsumer(channel);

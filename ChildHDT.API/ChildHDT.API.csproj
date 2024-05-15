@@ -14,4 +14,8 @@
     <Folder Include="Application Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChildHDT.Infrastructure\ChildHDT.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
