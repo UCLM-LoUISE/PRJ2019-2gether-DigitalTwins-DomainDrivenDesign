@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
 using MQTTnet.Client;
 
-namespace ChildHDT.Infrastructure.InfrastructureServices.Tests
+namespace ChildHDT.Testing.HDT01
 {
     [TestClass()]
     public class MessagingTests

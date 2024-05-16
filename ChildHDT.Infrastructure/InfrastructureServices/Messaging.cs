@@ -32,7 +32,6 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                                  basicProperties: null,
                                  body: body);
 
-            Console.WriteLine($"[x] Sent '{message}'");
             return Task.CompletedTask;
         }
 
@@ -47,7 +46,6 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"[x] Received '{message}'");
             };
             channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
 

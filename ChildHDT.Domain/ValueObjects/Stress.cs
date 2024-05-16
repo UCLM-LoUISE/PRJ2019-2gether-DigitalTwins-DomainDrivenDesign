@@ -9,8 +9,8 @@ namespace ChildHDT.Domain.ValueObjects
     public class Stress
     {
         // ATTRIBUTES
-        protected readonly double value;
-        protected readonly string level;
+        public readonly double value;
+        public readonly string level;
 
         // MEHTHODS
         public Stress(double value, string level)
