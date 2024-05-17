@@ -23,7 +23,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             return _context.Set<Child>().ToList();
         }
 
-        public Child FindById(int id)
+        public Child FindById(Guid id)
         {
             return _context.Set<Child>().Find(id);
         }
@@ -38,7 +38,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             _context.Entry(child).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var child = FindById(id);
             if (child != null)

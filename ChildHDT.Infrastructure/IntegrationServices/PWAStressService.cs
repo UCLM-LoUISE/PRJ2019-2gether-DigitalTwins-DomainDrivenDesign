@@ -12,7 +12,16 @@ namespace ChildHDT.Infrastructure.IntegrationServices
 {
     public class PWAStressService : IStressService
     {
+
+        private readonly INotificationHandler notificationHandler;
+
         // METHODS
+
+        public PWAStressService(INotificationHandler nh) 
+        {
+            notificationHandler = nh;
+        }
+
         public Stress CalculateStress(Child child)
         {
             var value = 0; // Calcular con lo de Luis
@@ -26,7 +35,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
             if (value > 0.6)
             {
                 level = "High";
-                child.StressLevelShotUp();
+                child.StressLevelShotUp(notificationHandler);
             } else
             {
                 level = "Controlled";

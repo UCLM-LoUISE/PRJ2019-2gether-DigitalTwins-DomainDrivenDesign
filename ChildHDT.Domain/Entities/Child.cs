@@ -1,4 +1,5 @@
-﻿using ChildHDT.Domain.ValueObjects;
+﻿using ChildHDT.Domain.DomainServices;
+using ChildHDT.Domain.ValueObjects;
 
 namespace ChildHDT.Domain.Entities
 {
@@ -23,9 +24,9 @@ namespace ChildHDT.Domain.Entities
         }
 
    
-        public void StressLevelShotUp()
+        public void StressLevelShotUp(INotificationHandler nh)
         {
-            this.Role.ManageStressLevelShotUp();
+            this.Role.ManageStressLevelShotUp(nh, this);
         }
 
         public void AssignRole(Role role)

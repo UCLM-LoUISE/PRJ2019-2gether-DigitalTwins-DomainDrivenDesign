@@ -1,11 +1,13 @@
-﻿namespace ChildHDT.Domain.ValueObjects
+﻿using ChildHDT.Domain.DomainServices;
+using ChildHDT.Domain.Entities;
+
+namespace ChildHDT.Domain.ValueObjects
 {
     public class Victim : Role
     {
-        public override void ManageStressLevelShotUp()
+        public override void ManageStressLevelShotUp(INotificationHandler nh, Child child)
         {
-            // A message is sent to the API asking for help
-            
+            nh.SendHelpMessage();
         }
     }
 }

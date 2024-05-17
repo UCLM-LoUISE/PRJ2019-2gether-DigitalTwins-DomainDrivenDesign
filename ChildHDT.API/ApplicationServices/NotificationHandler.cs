@@ -1,9 +1,10 @@
-﻿using ChildHDT.Domain.Entities;
+﻿using ChildHDT.Domain.DomainServices;
+using ChildHDT.Domain.Entities;
 using ChildHDT.Infrastructure.InfrastructureServices;
 
 namespace ChildHDT.API.ApplicationServices
 {
-    public class NotificationHandler
+    public class NotificationHandler : INotificationHandler
     {
         // ATTRIBUTES
         private Messaging messaging = new Messaging();
@@ -14,5 +15,5 @@ namespace ChildHDT.API.ApplicationServices
             var message = "" + child.Name + " " + child.Surname + " could be suffering bullying at this moment. We advice you to take a look.";
             messaging.Publish(child.Id, "help", message);
         }
-    }
+    } 
 }
