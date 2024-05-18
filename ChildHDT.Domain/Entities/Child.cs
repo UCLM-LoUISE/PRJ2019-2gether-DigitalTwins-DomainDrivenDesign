@@ -23,7 +23,24 @@ namespace ChildHDT.Domain.Entities
             Classroom = classroom;
         }
 
-   
+        public bool IsVictim()
+        {
+            return Role.IsVictim();
+        }
+        public bool IsBully()
+        {
+            return Role.IsBully();
+        }
+        public bool IsToMObserver()
+        {
+            return Role.IsToMObserver();
+        }
+        public bool IsNonToMObserver()
+        {
+            return Role.IsNonToMObserver();
+        }
+
+
         public void StressLevelShotUp(INotificationHandler nh)
         {
             this.Role.ManageStressLevelShotUp(nh, this);

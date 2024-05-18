@@ -5,6 +5,11 @@ namespace ChildHDT.Domain.ValueObjects
 {
     public class Bully : Role
     {
+        public override bool IsBully()
+        {
+            return true;
+        }
+
         public override void ManageStressLevelShotUp(INotificationHandler nh, Child child)
         {
             // In this case, a message is sent to the bully telling him to stop
