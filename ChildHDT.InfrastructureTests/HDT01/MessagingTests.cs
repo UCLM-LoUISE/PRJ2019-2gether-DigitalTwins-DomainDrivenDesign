@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChildHDT.Domain.Entities;
 using MQTTnet.Client;
+using ChildHDT.Domain.ValueObjects;
+using ChildHDT.API.ApplicationServices;
+using ChildHDT.Domain.Factory;
 
 namespace ChildHDT.Testing.HDT01
 {
@@ -14,14 +16,14 @@ namespace ChildHDT.Testing.HDT01
     public class MessagingTests
     {
 
-
-        private Child publisher = new Child(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
+        private FactoryChild factoryChild = new FactoryChild();
 
         [TestMethod()]
         public async Task SubscribeTestAsync()
         {
             // ARRANGE
             var messaging = new Messaging();
+            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
 
             // ACT
             await messaging.Subscribe(publisher.Id, "test/topic");
@@ -35,10 +37,25 @@ namespace ChildHDT.Testing.HDT01
         {
             // ARRANGE
             var messaging = new Messaging();
+            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
 
             // ACT
             await messaging.Publish(publisher.Id, "test/topic", "TEST MESSAGE");
 
+            // ASSERT
+
+        }
+
+        [TestMethod()]
+        public async Task SendHelpMessage()
+        {
+            // ARRANGE
+
+            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
+            var nh = new NotificationHandler();
+
+            // ACT
+            publisher.StressLevelShotUp(nh);
             // ASSERT
 
         }

@@ -7,7 +7,7 @@ namespace ChildHDT.Domain.ValueObjects
     {
         public override void ManageStressLevelShotUp(INotificationHandler nh, Child child)
         {
-            nh.SendHelpMessage();
+            nh.SendHelpMessage(child);
         }
     }
 }
