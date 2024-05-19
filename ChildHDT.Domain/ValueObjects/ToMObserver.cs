@@ -12,7 +12,7 @@ namespace ChildHDT.Domain.ValueObjects
         }
         public override void ManageStressLevelShotUp(INotificationHandler nh, Child child)
         {
-            // A message is sent to encourage them to act
+            nh.EncouragingMessage(child);
         }
     }
 }

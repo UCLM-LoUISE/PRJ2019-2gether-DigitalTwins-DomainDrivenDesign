@@ -10,5 +10,7 @@ namespace ChildHDT.Domain.DomainServices
     public interface INotificationHandler
     { 
         public void SendHelpMessage(Child child);
+        public void EncouragingMessage(Child child);
+        public void AdviceMessage(Child child);
     }
 }
