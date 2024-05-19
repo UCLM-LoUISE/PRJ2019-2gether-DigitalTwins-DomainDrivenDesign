@@ -20,13 +20,19 @@ namespace ChildHDT.API.ApplicationServices
         public void AdviceMessage(Child child)
         {
             var message = "Remember: Treating others with respect is crucial. Bullying hurts. If you need to talk, we are here to help you.";
-            messaging.Publish(child.Id, "advice", message);
+            messaging.Publish(child.Id, message);
         }
 
         public void EncouragingMessage(Child child)
         {
             var message = "If your peer is being bullied, don't stay silent. Your bravery can make a difference.";
-            messaging.Publish(child.Id, "encourage", message);
+            messaging.Publish(child.Id, message);
+        }
+
+        public void StressManagementMessage(Child child)
+        {
+            var message = "TODO";
+            messaging.Publish(child.Id, message);
         }
     } 
 }

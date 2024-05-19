@@ -35,6 +35,21 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             return Task.CompletedTask;
         }
 
+        public Task Publish(Guid publisherId, string message)
+        {
+            var queue = publisherId.ToString();
+
+            channel.QueueDeclare(queue: queue, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            var body = Encoding.UTF8.GetBytes(message);
+
+            channel.BasicPublish(exchange: "",
+                                 routingKey: queue,
+                                 basicProperties: null,
+                                 body: body);
+
+            return Task.CompletedTask;
+        }
+
         public async Task Subscribe(Guid publisherId, string queueInfo)
         {
             var queue = publisherId + "/" + queueInfo;

@@ -14,11 +14,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChildHDT.Testing.HDT02
 {
-    [TestClass]
+    [TestClass()]
     public class RoleAssignmentTests
     {
         private FactoryChild factoryChild = new FactoryChild();
-        [TestMethod]
+        [TestMethod()]
         public void AssignRole()
         {
             // ARRANGE
@@ -43,7 +43,7 @@ namespace ChildHDT.Testing.HDT02
             Assert.IsTrue(childNonToMObserver.IsNonToMObserver(), "ChildNonToMObserver should be assigned the NonToMObserver role.");
         }
 
-        [TestMethod]
+        [TestMethod()]
         public void AssignRoleService()
         {
             // ARRANGE
