@@ -6,7 +6,7 @@ namespace ChildHDT.Domain.Entities
     public class Child
     {
         // ATTRIBUTES
-        public Guid Id { get; init; } //Child ID is automatically created
+        public Guid Id { get; private set; } 
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
@@ -17,6 +17,7 @@ namespace ChildHDT.Domain.Entities
 
         public Child(string name, string surname, int age, string classroom) { 
             //Por factorizar
+            Id = Guid.NewGuid();
             Name = name;
             Surname = surname;
             Age = age;

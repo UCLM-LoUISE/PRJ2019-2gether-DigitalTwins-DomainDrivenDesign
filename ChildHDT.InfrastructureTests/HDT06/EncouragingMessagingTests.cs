@@ -16,7 +16,7 @@ namespace ChildHDT.Testing.HDT06
         private FactoryChild factoryChild = new FactoryChild();
 
         [TestMethod()]
-        public async Task SendHelpMessage()
+        public async Task EncouragingMessageTest()
         {
             // ARRANGE
 

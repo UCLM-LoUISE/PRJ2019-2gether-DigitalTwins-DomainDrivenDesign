@@ -19,7 +19,7 @@ namespace ChildHDT.Testing.HDT08
         {
             // ARRANGE
 
-            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
+            var publisher = factoryChild.CreateChildBully(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
             var nh = new NotificationHandler();
 
             // ACT

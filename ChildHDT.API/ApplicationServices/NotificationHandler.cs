@@ -31,7 +31,7 @@ namespace ChildHDT.API.ApplicationServices
 
         public void StressManagementMessage(Child child)
         {
-            var message = "TODO";
+            var message = "You seem to be a bit stressed. Take a break or ask for help so that you can relax!";
             messaging.Publish(child.Id, message);
         }
     } 
