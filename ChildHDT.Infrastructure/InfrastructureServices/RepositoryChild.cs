@@ -18,11 +18,6 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<Child> GetAll()
-        {
-            return _context.Set<Child>().ToList();
-        }
-
         public Child FindById(Guid id)
         {
             return _context.Set<Child>().Find(id);
