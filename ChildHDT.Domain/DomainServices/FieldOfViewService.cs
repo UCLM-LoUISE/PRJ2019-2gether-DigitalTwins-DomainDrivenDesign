@@ -11,13 +11,13 @@ namespace ChildHDT.Domain.DomainServices
     {
         // METHODS
 
-        public Orientation CalculateFieldOfViewService(Location one, Location other, double azimuth1)
+        public Orientation CalculateFieldOfViewService(Location one, Location other, double azimuth)
         {
 
             double x1 = one.Latitude, y1 = one.Longitude;
             double x2 = other.Latitude, y2 = other.Longitude;
 
-            double azimuth1Rad = DegreesToRadians(azimuth1 + 90.0); 
+            double azimuth1Rad = DegreesToRadians(azimuth + 90.0); 
             double[] orientationVector = { Math.Cos(azimuth1Rad), Math.Sin(azimuth1Rad) };
 
             double[] vectorToSecondPerson = { x2 - x1, y2 - y1 };

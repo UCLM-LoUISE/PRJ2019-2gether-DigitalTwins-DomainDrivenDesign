@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChildHDT.Infrastructure.IntegrationServices
 {
-    public class PWAStressService : IStressService
+    public class PWAStressService //: IStressService
     {
 
         private readonly INotificationHandler notificationHandler;
