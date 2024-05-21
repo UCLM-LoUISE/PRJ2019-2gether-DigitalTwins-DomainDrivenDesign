@@ -40,17 +40,17 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            SpeedRegistry speedRegistry = new SpeedRegistry(child);
+            StressRegistry stressRegistry = new StressRegistry(child);
 
             // ACT
-            await speedRegistry.Start();
+            await stressRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
-            var events = speedRegistry.GetEvents();
+            var events = stressRegistry.GetEvents();
 
             // ASSERT
 
-            var expected = new SpeedMS(55);
-            var actual = events[0].Speed;
+            var expected = new Stress(value: 1, level: "High");
+            var actual = events[0].Stress;
             Assert.AreEqual(actual, expected);
 
         }
@@ -60,17 +60,17 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            SpeedRegistry speedRegistry = new SpeedRegistry(child);
+            LocationRegistry locationRegistry = new LocationRegistry(child);
 
             // ACT
-            await speedRegistry.Start();
+            await locationRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
-            var events = speedRegistry.GetEvents();
+            var events = locationRegistry.GetEvents();
 
             // ASSERT
 
-            var expected = new SpeedMS(55);
-            var actual = events[0].Speed;
+            var expected = new Location(latitude: 55, longitude: 30);
+            var actual = events[0].Location;
             Assert.AreEqual(actual, expected);
 
         }
@@ -80,17 +80,17 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            SpeedRegistry speedRegistry = new SpeedRegistry(child);
+            OrientationRegistry orientationRegistry = new OrientationRegistry(child);
 
             // ACT
-            await speedRegistry.Start();
+            await orientationRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
-            var events = speedRegistry.GetEvents();
+            var events = orientationRegistry.GetEvents();
 
             // ASSERT
 
-            var expected = new SpeedMS(55);
-            var actual = events[0].Speed;
+            var expected = new Orientation(20);
+            var actual = events[0].Orientation;
             Assert.AreEqual(actual, expected);
 
         }

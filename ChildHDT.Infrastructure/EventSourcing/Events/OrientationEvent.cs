@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChildHDT.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace ChildHDT.Infrastructure.EventSourcing.Events
 {
     public class OrientationEvent : Event
     {
-        public double Orientation { get; set; }
+        public Orientation Orientation { get; set; }
 
-        public OrientationEvent(double orientationData, DateTime timestamp) : base(timestamp)
+        public OrientationEvent(Orientation orientationData, DateTime timestamp) : base(timestamp)
         {
             Orientation = orientationData;
         }

@@ -1,4 +1,5 @@
 ﻿using ChildHDT.Domain.Entities;
+using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.EventSourcing.Events;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 
         protected override OrientationEvent DeserializeEvent(string payload)
         {
-            var data = JsonSerializer.Deserialize<double>(payload);
+            var data = JsonSerializer.Deserialize<Orientation>(payload);
             return new OrientationEvent(data, DateTime.Now);
         }
     }
