@@ -48,7 +48,7 @@ namespace ChildHDT.Testing.HDT02
         {
             // ARRANGE
 
-            var child = factoryChild.CreateChildVictim(name: "John", surname: "Doe", age: 10, classroom: "4ºB");
+            var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
             var repo = new RepositoryChild(new ChildContext());
             repo.Add(child);
             repo.Save();

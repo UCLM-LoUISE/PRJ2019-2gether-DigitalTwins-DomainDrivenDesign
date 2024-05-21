@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application Services\**" />
+    <Content Remove="Application Services\**" />
+    <EmbeddedResource Remove="Application Services\**" />
+    <None Remove="Application Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application Services\" />
     <Folder Include="Models\" />
   </ItemGroup>
 

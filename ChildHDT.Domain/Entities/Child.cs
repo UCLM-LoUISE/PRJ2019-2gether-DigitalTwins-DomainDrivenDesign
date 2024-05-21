@@ -1,5 +1,6 @@
 ﻿using ChildHDT.Domain.DomainServices;
 using ChildHDT.Domain.ValueObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChildHDT.Domain.Entities
 {
@@ -12,6 +13,8 @@ namespace ChildHDT.Domain.Entities
         public int Age { get; set; }
         public string Classroom { get; set; }
         public Role Role { get; set; }
+        [NotMapped]
+        public IFeatures Features { get; set; }
         
         // METHODS
 
