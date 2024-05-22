@@ -27,7 +27,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
         {
             var options = new MqttClientOptionsBuilder()
                 .WithClientId("ChildClient")
-                .WithTcpServer("192.168.0.102", 1883)
+                .WithTcpServer("172.19.168.212", 1883)
                 .WithCredentials("admin", "public")
                 .WithCleanSession()
                 .Build();

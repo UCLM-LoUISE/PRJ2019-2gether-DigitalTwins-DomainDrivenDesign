@@ -36,6 +36,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
             {
                 level = "High";
                 child.StressLevelShotUp(notificationHandler);
+                //ALMACEN
             } else
             {
                 level = "Controlled";

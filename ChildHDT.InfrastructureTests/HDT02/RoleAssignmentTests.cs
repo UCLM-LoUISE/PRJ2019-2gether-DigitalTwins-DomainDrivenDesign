@@ -48,16 +48,16 @@ namespace ChildHDT.Testing.HDT02
         public void AssignRoleService()
         {
             // ARRANGE
-            var options = new DbContextOptionsBuilder<ChildContext>()
-            .Options;
+            //var options = new DbContextOptionsBuilder<ChildContext>()
+            //.Options;
 
-            var context = new ChildContext(options); 
+            var context = new ChildContext(); 
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
 
 
-            var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB")
+            var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
             var repo = new RepositoryChild(new ChildContext());
             repo.Add(child);
             repo.Save();
