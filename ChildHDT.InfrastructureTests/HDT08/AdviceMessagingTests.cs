@@ -1,5 +1,6 @@
 ﻿using ChildHDT.API.ApplicationServices;
 using ChildHDT.Domain.Factory;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace ChildHDT.Testing.HDT08
     public class AdviceMessagingTests
     {
         private FactoryChild factoryChild = new FactoryChild();
+        private IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
 
         [TestMethod()]
         public void AdviceMessageTest()

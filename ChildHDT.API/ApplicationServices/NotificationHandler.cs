@@ -8,8 +8,14 @@ namespace ChildHDT.API.ApplicationServices
     public class NotificationHandler : INotificationHandler
     {
         // ATTRIBUTES
-        private Messaging messaging = new Messaging();
+
+        private Messaging messaging;
         
+        public NotificationHandler ()
+        {
+            messaging = new Messaging();
+        }
+
         // METHODS
         public void SendHelpMessage(Child child) 
         {

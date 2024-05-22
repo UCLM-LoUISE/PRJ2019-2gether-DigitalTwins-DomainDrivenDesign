@@ -1,6 +1,7 @@
 ﻿using ChildHDT.Domain.Entities;
 using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.EventSourcing.Events;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class StressRegistry : EventStore<StressEvent>
     {
-        public StressRegistry(Child child) : base(child, "stress") { }
+        public StressRegistry(Child child, IConfiguration configuration) : base(child, "location", configuration) { }
 
         protected override StressEvent DeserializeEvent(string payload)
         {

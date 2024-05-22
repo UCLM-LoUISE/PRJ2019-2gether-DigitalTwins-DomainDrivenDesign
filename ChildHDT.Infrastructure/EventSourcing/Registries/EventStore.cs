@@ -1,4 +1,6 @@
-﻿using ChildHDT.Infrastructure.EventSourcing.Events;
+﻿using ChildHDT.Domain.Entities;
+using Microsoft.Extensions.Configuration;
+using ChildHDT.Infrastructure.EventSourcing.Events;
 using MQTTnet.Client;
 using MQTTnet;
 using System;
@@ -6,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChildHDT.Domain.Entities;
 
 namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
@@ -16,21 +17,29 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
         private readonly IMqttClient _client;
         private readonly string _topic;
 
-        protected EventStore (Child child, String topic)
+        protected EventStore (Child child, string topic, IConfiguration configuration)
         {
             _topic = "" + child.Name + "/" + topic;
             var factory = new MqttFactory();
             _client = factory.CreateMqttClient();
-        }
 
-        public async Task Start()
-        {
+            var mqttServer = configuration["MQTT:Server"];
+            var mqttPort = int.Parse(configuration["MQTT:Port"]);
+            var mqttUserName = configuration["MQTT:UserName"];
+            var mqttPassword = configuration["MQTT:Password"];
+
             var options = new MqttClientOptionsBuilder()
                 .WithClientId("ChildClient")
-                .WithTcpServer("172.19.168.212", 1883)
-                .WithCredentials("admin", "public")
+                .WithTcpServer(mqttServer, mqttPort)
+                .WithCredentials(mqttUserName, mqttPassword)
                 .WithCleanSession()
                 .Build();
+
+            Start(options).Wait();
+        }
+
+        public async Task Start(MqttClientOptions options)
+        {
 
             _client.ApplicationMessageReceivedAsync += e =>
             {
@@ -40,8 +49,6 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
                 ReceiveEvent(eventData);
                 return Task.CompletedTask;
             };
-
-
 
             await _client.ConnectAsync(options);
             await _client.SubscribeAsync(_topic);

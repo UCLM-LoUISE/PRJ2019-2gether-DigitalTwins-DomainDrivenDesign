@@ -9,6 +9,7 @@ using MQTTnet.Client;
 using ChildHDT.Domain.ValueObjects;
 using ChildHDT.API.ApplicationServices;
 using ChildHDT.Domain.Factory;
+using Microsoft.Extensions.Configuration;
 
 namespace ChildHDT.Testing.HDT01
 {
@@ -17,11 +18,15 @@ namespace ChildHDT.Testing.HDT01
     {
 
         private FactoryChild factoryChild = new FactoryChild();
+        private IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
 
         [TestMethod()]
         public async Task SubscribeTestAsync()
         {
             // ARRANGE
+
             var messaging = new Messaging();
             var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
 
@@ -36,6 +41,7 @@ namespace ChildHDT.Testing.HDT01
         public async Task PublishTestAsync()
         {
             // ARRANGE
+
             var messaging = new Messaging();
             var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
 

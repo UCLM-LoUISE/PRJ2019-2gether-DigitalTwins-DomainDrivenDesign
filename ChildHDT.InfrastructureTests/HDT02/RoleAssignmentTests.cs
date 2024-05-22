@@ -11,6 +11,7 @@ using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.InfrastructureServices;
 using ChildHDT.Infrastructure.InfrastructureServices.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChildHDT.Testing.HDT02
@@ -19,6 +20,9 @@ namespace ChildHDT.Testing.HDT02
     public class RoleAssignmentTests
     {
         private FactoryChild factoryChild = new FactoryChild();
+        private IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
         [TestMethod()]
         public void AssignRole()
         {
@@ -51,14 +55,14 @@ namespace ChildHDT.Testing.HDT02
             //var options = new DbContextOptionsBuilder<ChildContext>()
             //.Options;
 
-            var context = new ChildContext(); 
+            var context = new ChildContext(configuration); 
 
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreated();
 
 
             var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
-            var repo = new RepositoryChild(new ChildContext());
+            var repo = new RepositoryChild(new ChildContext(configuration));
             repo.Add(child);
             repo.Save();
             var roleService = new RoleAssignment(repo);

@@ -1,6 +1,7 @@
 ﻿using ChildHDT.Domain.Factory;
 using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.EventSourcing.Registries;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,18 @@ namespace ChildHDT.Testing.HDT05
     public class StressCalculationTests
     {
         private FactoryChild factoryChild = new FactoryChild();
+        private IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
 
         [TestMethod()]
         public async Task SpeedEventStoreTest()
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            SpeedRegistry speedRegistry = new SpeedRegistry(child);
+            SpeedRegistry speedRegistry = new SpeedRegistry(child, configuration);
 
             // ACT
-            await speedRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
             var events = speedRegistry.GetEvents();
 
@@ -40,10 +43,9 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            StressRegistry stressRegistry = new StressRegistry(child);
+            StressRegistry stressRegistry = new StressRegistry(child, configuration);
 
             // ACT
-            await stressRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
             var events = stressRegistry.GetEvents();
 
@@ -60,10 +62,9 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            LocationRegistry locationRegistry = new LocationRegistry(child);
+            LocationRegistry locationRegistry = new LocationRegistry(child, configuration);
 
             // ACT
-            await locationRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
             var events = locationRegistry.GetEvents();
 
@@ -80,10 +81,9 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            OrientationRegistry orientationRegistry = new OrientationRegistry(child);
+            OrientationRegistry orientationRegistry = new OrientationRegistry(child, configuration);
 
             // ACT
-            await orientationRegistry.Start();
             await Task.Delay(TimeSpan.FromSeconds(7));
             var events = orientationRegistry.GetEvents();
 

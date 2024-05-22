@@ -13,21 +13,23 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Context
 {
     public class ChildContext : DbContext
     {
+        // ATTRIBUTES
         public DbSet<Child> Children { get; set; }
-        //private readonly IConfiguration _configuration;
+        private readonly IConfiguration Configuration;
 
-        //public ChildContext(IConfiguration configuration) 
-        //{ 
-        //    _configuration = configuration;
-        //}
+        // METHODS
+        public ChildContext(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //var connectionString = _configuration.GetConnectionString("Postgres");
-                //optionsBuilder.UseNpgsql(connectionString);
-                optionsBuilder.UseNpgsql("Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword");
+                //optionsBuilder.UseNpgsql("Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword");
+                var connectionString = Configuration.GetConnectionString("PosgtgreSQL");
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 

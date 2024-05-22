@@ -1,6 +1,7 @@
 ﻿using ChildHDT.Domain.Entities;
 using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.EventSourcing.Events;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class SpeedRegistry : EventStore<SpeedEvent>
     {
-        public SpeedRegistry(Child child) : base(child, "speed") { }
+        public SpeedRegistry(Child child, IConfiguration configuration) : base(child, "location", configuration) { }
 
         protected override SpeedEvent DeserializeEvent(string payload)
         {
