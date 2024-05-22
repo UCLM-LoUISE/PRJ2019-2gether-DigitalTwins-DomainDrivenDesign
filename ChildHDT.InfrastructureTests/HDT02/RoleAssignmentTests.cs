@@ -10,6 +10,7 @@ using ChildHDT.Domain.Factory;
 using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.InfrastructureServices;
 using ChildHDT.Infrastructure.InfrastructureServices.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChildHDT.Testing.HDT02
@@ -47,8 +48,16 @@ namespace ChildHDT.Testing.HDT02
         public void AssignRoleService()
         {
             // ARRANGE
+            var options = new DbContextOptionsBuilder<ChildContext>()
+            .Options;
 
-            var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
+            var context = new ChildContext(options); 
+
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+
+            var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB")
             var repo = new RepositoryChild(new ChildContext());
             repo.Add(child);
             repo.Save();
