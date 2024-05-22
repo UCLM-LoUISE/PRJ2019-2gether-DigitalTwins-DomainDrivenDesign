@@ -49,32 +49,31 @@ namespace ChildHDT.Testing.HDT02
         }
 
         [TestMethod()]
-        public void AssignRoleService()
+        public async void AssignRoleService()
         {
             // ARRANGE
             //var options = new DbContextOptionsBuilder<ChildContext>()
             //.Options;
 
-            var context = new ChildContext(configuration); 
+            var context = new ChildContext();
+            var uof = new UnitOfwork(context);
 
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreated();
 
 
             var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
-            var repo = new RepositoryChild(new ChildContext(configuration));
-            repo.Add(child);
-            repo.Save();
+            var repo = new RepositoryChild(uof);
+            await repo.Add(child);
             var roleService = new RoleAssignment(repo);
 
             // ACT
 
             roleService.AssignRoleBullyToChild(child.Id);
-            repo.Save();
 
             // ASSERT
 
-            var after = repo.FindById(child.Id);
+            var after = await repo.FindById(child.Id);
             Assert.IsTrue(after.IsBully(), "ChildBully should be assigned the Bully role.");
 
         }

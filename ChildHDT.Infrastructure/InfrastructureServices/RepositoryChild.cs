@@ -4,48 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
+using ChildHDT.Infrastructure.InfrastructureServices.Context;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
 {
-    public class RepositoryChild
+    public class RepositoryChild : ControllerBase
     {
         private readonly DbContext _context;
+        protected DbSet<Child> children;
+        private readonly IUnitOfwork _unitOfWork;
 
-        public RepositoryChild(DbContext context)
+        public RepositoryChild(IUnitOfwork unitOfwork)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _unitOfWork = unitOfwork;
+            children = _unitOfWork.Context.Set<Child>();
         }
 
-        public Child FindById(Guid id)
+        public async Task<Child> FindById(Guid id)
         {
-            return _context.Set<Child>().Find(id);
+            var data = await children.FindAsync(id);
+            return data;
         }
 
-        public void Add(Child child)
+        public async Task<Child> Add(Child child)
         {
-            _context.Set<Child>().Add(child);
+            children.Add(child);
+            await _unitOfWork.SaveChangesAsync();
+            return child;
         }
 
-        public void Update(Child child)
+        public async Task<bool> Delete(Guid id)
         {
-            _context.Entry(child).State = EntityState.Modified;
+            var data = await children.FindAsync(id);
+            if (data == null) return false;
+            
+            children.Remove(data);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
+            
         }
-
-        public void Delete(Guid id)
-        {
-            var child = FindById(id);
-            if (child != null)
-            {
-                _context.Set<Child>().Remove(child);
-            }
-        }
-
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
     }
 }

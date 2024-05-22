@@ -14,33 +14,33 @@ namespace ChildHDT.API.ApplicationServices
             this.rc = rc;
         }
 
-        public void AssignRoleVictimToChild(Guid childId)
+        public async void AssignRoleVictimToChild(Guid childId)
         {
-            var child = rc.FindById(childId);
+            var child = await rc.FindById(childId);
             child.AssignRole(new Victim());
         }
 
-        public void AssignRoleBullyToChild(Guid childId)
+        public async void AssignRoleBullyToChild(Guid childId)
         {
-            var child = rc.FindById(childId);
+            var child = await rc.FindById(childId);
             child.AssignRole(new Bully());
         }
 
-        public void AssignRoleToMObserverToChild(Guid childId)
+        public async void AssignRoleToMObserverToChild(Guid childId)
         {
-            var child = rc.FindById(childId);
+            var child = await rc.FindById(childId);
             child.AssignRole(new ToMObserver());
         }
 
-        public void AssignRoleNonToMObserverToChild(Guid childId)
+        public async void AssignRoleNonToMObserverToChild(Guid childId)
         {
-            var child = rc.FindById(childId);
+            var child = await rc.FindById(childId);
             child.AssignRole(new NonToMObserver());
         }
 
-        public void DeleteRoleToChild(Guid childId)
+        public async void DeleteRoleToChild(Guid childId)
         {
-            var child = rc.FindById(childId);
+            var child = await rc.FindById(childId);
             child.AssignRole(null);
         }
     }

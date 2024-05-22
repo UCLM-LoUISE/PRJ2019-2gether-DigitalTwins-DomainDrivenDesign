@@ -17,7 +17,8 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public Messaging()
         {
-            var hostname = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var hostname = Environment.GetEnvironmentVariable("RabbitMQ__HostName");
+            if (hostname is null) hostname = "localhost";
             var factory = new ConnectionFactory() { HostName =  hostname};
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
