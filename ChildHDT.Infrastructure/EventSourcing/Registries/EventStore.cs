@@ -23,7 +23,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
             var factory = new MqttFactory();
             _client = factory.CreateMqttClient();
 
-            var mqttServer = "192.168.0.103";
+            var mqttServer = "127.0.0.1";
             var mqttPort = 1883;
             var mqttUserName = "admin";
             var mqttPassword = "public";

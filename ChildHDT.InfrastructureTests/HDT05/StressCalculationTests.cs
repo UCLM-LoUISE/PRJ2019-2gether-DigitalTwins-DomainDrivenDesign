@@ -24,7 +24,7 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            SpeedRegistry speedRegistry = new SpeedRegistry(child, configuration);
+            SpeedRegistry speedRegistry = new SpeedRegistry(child.Id);
 
             // ACT
             await Task.Delay(TimeSpan.FromSeconds(7));
@@ -43,7 +43,7 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            StressRegistry stressRegistry = new StressRegistry(child, configuration);
+            StressRegistry stressRegistry = new StressRegistry(child.Id);
 
             // ACT
             await Task.Delay(TimeSpan.FromSeconds(7));
@@ -62,7 +62,7 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            LocationRegistry locationRegistry = new LocationRegistry(child, configuration);
+            LocationRegistry locationRegistry = new LocationRegistry(child.Id);
 
             // ACT
             await Task.Delay(TimeSpan.FromSeconds(7));
@@ -81,7 +81,7 @@ namespace ChildHDT.Testing.HDT05
         {
             // ARRANGE
             var child = factoryChild.CreateChildVictim(name: "Peter", surname: "Parker", age: 10, classroom: "4ºB");
-            OrientationRegistry orientationRegistry = new OrientationRegistry(child, configuration);
+            OrientationRegistry orientationRegistry = new OrientationRegistry(child.Id);
 
             // ACT
             await Task.Delay(TimeSpan.FromSeconds(7));
