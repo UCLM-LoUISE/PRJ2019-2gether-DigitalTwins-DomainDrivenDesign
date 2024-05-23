@@ -29,8 +29,8 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var roleConverter = new ValueConverter<Role, string>(
-                v => v.GetType().Name,
-                v => (Role)Activator.CreateInstance(Type.GetType("ChildHDT.Domain.ValueObjects." + v))
+                v => RoleConverterHelper.SerializeRole(v),
+                v => RoleConverterHelper.DeserializeRole(v)
             );
 
             modelBuilder.Entity<Child>()

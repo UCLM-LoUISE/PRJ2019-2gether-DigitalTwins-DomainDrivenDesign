@@ -5,6 +5,7 @@ namespace ChildHDT.Domain.ValueObjects
 {
     public abstract class Role
     {
+        protected Role() { }
         public abstract void ManageStressLevelShotUp(INotificationHandler nh, Child child);
         public virtual bool IsVictim() {  return false; }
         public virtual bool IsBully() { return false; }

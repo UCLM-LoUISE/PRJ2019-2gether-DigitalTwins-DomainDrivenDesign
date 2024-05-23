@@ -1,6 +1,7 @@
 ﻿using ChildHDT.Domain.DomainServices;
 using ChildHDT.Domain.ValueObjects;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ChildHDT.Domain.Entities
 {
@@ -14,7 +15,8 @@ namespace ChildHDT.Domain.Entities
         public string Classroom { get; set; }
         public Role Role { get; set; }
         [NotMapped]
-        public IFeatures Features { get; set; }
+        [JsonIgnore]
+        public IFeatures? Features { get; set; }
         
         // METHODS
 
