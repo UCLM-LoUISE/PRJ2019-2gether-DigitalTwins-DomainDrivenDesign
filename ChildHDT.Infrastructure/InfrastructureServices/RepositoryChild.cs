@@ -36,6 +36,13 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             return child;
         }
 
+        public async Task<Child> Update(Child child)
+        {
+            children.Update(child);
+            await _unitOfWork.SaveChangesAsync();
+            return child;
+        }
+
         public async Task<bool> Delete(Guid id)
         {
             var data = await children.FindAsync(id);

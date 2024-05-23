@@ -1,4 +1,5 @@
-﻿using ChildHDT.Domain.ValueObjects;
+﻿using ChildHDT.Domain.Entities;
+using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.InfrastructureServices;
 
 namespace ChildHDT.API.ApplicationServices
@@ -14,34 +15,39 @@ namespace ChildHDT.API.ApplicationServices
             this.rc = rc;
         }
 
-        public async void AssignRoleVictimToChild(Guid childId)
+        public async Task<Child> AssignRoleVictimToChild(Guid childId)
         {
             var child = await rc.FindById(childId);
             child.AssignRole(new Victim());
+            return await rc.Update(child);
         }
 
-        public async void AssignRoleBullyToChild(Guid childId)
+        public async Task<Child> AssignRoleBullyToChild(Guid childId)
         {
             var child = await rc.FindById(childId);
             child.AssignRole(new Bully());
+            return await rc.Update(child);
         }
 
-        public async void AssignRoleToMObserverToChild(Guid childId)
+        public async Task<Child> AssignRoleToMObserverToChild(Guid childId)
         {
             var child = await rc.FindById(childId);
             child.AssignRole(new ToMObserver());
+            return await rc.Update(child);
         }
 
-        public async void AssignRoleNonToMObserverToChild(Guid childId)
+        public async Task<Child> AssignRoleNonToMObserverToChild(Guid childId)
         {
             var child = await rc.FindById(childId);
             child.AssignRole(new NonToMObserver());
+            return await rc.Update(child);
         }
 
-        public async void DeleteRoleToChild(Guid childId)
+        public async Task<Child> DeleteRoleToChild(Guid childId)
         {
             var child = await rc.FindById(childId);
             child.AssignRole(null);
+            return await rc.Update(child);
         }
     }
 }
