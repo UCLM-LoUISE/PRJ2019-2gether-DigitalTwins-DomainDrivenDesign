@@ -13,7 +13,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class StressRegistry : EventStore<StressEvent>
     {
-        public StressRegistry(Child child, IConfiguration configuration) : base(child, "location", configuration) { }
+        public StressRegistry(Guid id) : base(id, "stress") { }
 
         protected override StressEvent DeserializeEvent(string payload)
         {

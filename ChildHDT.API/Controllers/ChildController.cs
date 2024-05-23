@@ -1,8 +1,11 @@
 ﻿using ChildHDT.API.ApplicationServices;
 using ChildHDT.Domain.Entities;
 using ChildHDT.Domain.ValueObjects;
+using ChildHDT.Infrastructure.EventSourcing.Events;
+using ChildHDT.Infrastructure.EventSourcing.Registries;
 using ChildHDT.Infrastructure.InfrastructureServices;
 using ChildHDT.Infrastructure.InfrastructureServices.Context;
+using ChildHDT.Infrastructure.IntegrationServices;
 using ChildHDT.Infrastructure.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -41,11 +44,11 @@ namespace ChildHDT.API.Controllers
         //    ViewData["Server"] = _mqttSettings.Value.Server;
         //}
 
-        [HttpGet("{id}")] 
+        [HttpGet("{id}")]
         public async Task<ActionResult<Child>> GetChild(Guid id)
         {
             var child = await _repo.FindById(id);
-            if(child == null)
+            if (child == null)
             {
                 return NotFound();
             }
@@ -61,7 +64,7 @@ namespace ChildHDT.API.Controllers
         [HttpPut("{id}/Role/Victim")]
         public async Task<ActionResult<Child>> AssignVictimRoleToChild(Guid id)
         {
-            var child  = await _roleAssignment.AssignRoleVictimToChild(id);
+            var child = await _roleAssignment.AssignRoleVictimToChild(id);
             return child;
         }
 
@@ -91,6 +94,19 @@ namespace ChildHDT.API.Controllers
         {
             var child = await _roleAssignment.DeleteRoleToChild(id);
             return child;
+        }
+
+        [HttpGet("{id}/Stress/{from}/{to}")]
+        public async Task<ActionResult<StressEvent>> GetStressEvents(Guid id, DateTime from, DateTime to)
+        {
+            var child = await _repo.FindById(id);
+            if (child == null)
+            {
+                return NotFound();
+            }
+            
+            var list = (child.Features as PWAFeatures).SpeedRegistry.GetEventsBetweenDates(from, to);
+            return Ok(list);
         }
     }
 }

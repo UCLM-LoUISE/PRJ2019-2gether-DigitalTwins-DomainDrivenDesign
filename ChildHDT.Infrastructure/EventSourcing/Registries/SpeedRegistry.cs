@@ -13,7 +13,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class SpeedRegistry : EventStore<SpeedEvent>
     {
-        public SpeedRegistry(Child child, IConfiguration configuration) : base(child, "location", configuration) { }
+        public SpeedRegistry(Guid id) : base(id, "speed") { }
 
         protected override SpeedEvent DeserializeEvent(string payload)
         {

@@ -17,16 +17,16 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
         private readonly IMqttClient _client;
         private readonly string _topic;
 
-        protected EventStore (Child child, string topic, IConfiguration configuration)
+        protected EventStore (Guid id, string topic)
         {
-            _topic = "" + child.Name + "/" + topic;
+            _topic = "" + id + "/" + topic;
             var factory = new MqttFactory();
             _client = factory.CreateMqttClient();
 
-            var mqttServer = configuration["MQTT:Server"];
-            var mqttPort = int.Parse(configuration["MQTT:Port"]);
-            var mqttUserName = configuration["MQTT:UserName"];
-            var mqttPassword = configuration["MQTT:Password"];
+            var mqttServer = "192.168.0.103";
+            var mqttPort = 1883;
+            var mqttUserName = "admin";
+            var mqttPassword = "public";
 
             var options = new MqttClientOptionsBuilder()
                 .WithClientId("ChildClient")
@@ -63,6 +63,16 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
         public List<T> GetEvents()
         {
             return Events;
+        }
+
+        public List<T> GetEventsBetweenDates(DateTime from, DateTime to)
+        {
+            if (from > to)
+            {
+                throw new ArgumentException("Start date cannot be greater than end date");
+            }
+
+            return Events.Where(e => e.Timestamp >= from && e.Timestamp <= to).ToList();
         }
 
         protected abstract T DeserializeEvent(string payload);

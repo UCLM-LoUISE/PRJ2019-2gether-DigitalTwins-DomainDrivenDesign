@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
 using ChildHDT.Infrastructure.InfrastructureServices.Context;
+using ChildHDT.Infrastructure.IntegrationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Net.Http.Headers;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
 {
@@ -31,6 +32,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public async Task<Child> Add(Child child)
         {
+            child.Features = new PWAFeatures(child.Id);
             children.Add(child);
             await _unitOfWork.SaveChangesAsync();
             return child;
