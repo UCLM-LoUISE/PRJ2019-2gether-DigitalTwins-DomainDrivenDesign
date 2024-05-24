@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
@@ -23,7 +24,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
             var factory = new MqttFactory();
             _client = factory.CreateMqttClient();
 
-            var mqttServer = "127.0.0.1";
+            var mqttServer = "192.168.0.104";
             var mqttPort = 1883;
             var mqttUserName = "admin";
             var mqttPassword = "public";

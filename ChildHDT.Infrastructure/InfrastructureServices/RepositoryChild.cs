@@ -15,17 +15,19 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 {
     public class RepositoryChild : ControllerBase
     {
+        public int IDPrueba;
         private readonly DbContext _context;
         protected DbSet<Child> children;
         private readonly IUnitOfwork _unitOfWork;
-        private Dictionary<Guid, IFeatures> _featuresCache;
+        private static Dictionary<Guid, IFeatures> _featuresCache = new Dictionary<Guid, IFeatures>();
 
 
         public RepositoryChild(IUnitOfwork unitOfwork)
         {
+            Random rnd = new Random();
+            IDPrueba = rnd.Next(100);
             _unitOfWork = unitOfwork;
             children = _unitOfWork.Context.Set<Child>();
-            _featuresCache = new Dictionary<Guid, IFeatures>();
         }
 
         public async Task<Child> FindById(Guid id)

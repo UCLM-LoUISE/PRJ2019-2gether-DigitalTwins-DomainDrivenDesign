@@ -1,3 +1,4 @@
+using ChildHDT.Infrastructure.InfrastructureServices;
 using ChildHDT.Infrastructure.InfrastructureServices.Context;
 using ChildHDT.Infrastructure.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ChildContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfwork, UnitOfwork>();
+builder.Services.AddScoped<RepositoryChild>();
 
 builder.Services.AddHttpsRedirection(options =>
 {

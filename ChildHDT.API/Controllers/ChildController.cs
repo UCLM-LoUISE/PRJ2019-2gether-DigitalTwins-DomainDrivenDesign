@@ -105,7 +105,46 @@ namespace ChildHDT.API.Controllers
                 return NotFound();
             }
             
+            var list = (child.Features as PWAFeatures).StressRegistry.GetEventsBetweenDates(from, to);
+            return Ok(list);
+        }
+
+        [HttpGet("{id}/Speed/{from}/{to}")]
+        public async Task<ActionResult<StressEvent>> GetSpeedEvents(Guid id, DateTime from, DateTime to)
+        {
+            var child = await _repo.FindById(id);
+            if (child == null)
+            {
+                return NotFound();
+            }
+
             var list = (child.Features as PWAFeatures).SpeedRegistry.GetEventsBetweenDates(from, to);
+            return Ok(list);
+        }
+
+        [HttpGet("{id}/Location/{from}/{to}")]
+        public async Task<ActionResult<StressEvent>> GetLocationEvents(Guid id, DateTime from, DateTime to)
+        {
+            var child = await _repo.FindById(id);
+            if (child == null)
+            {
+                return NotFound();
+            }
+
+            var list = (child.Features as PWAFeatures).LocationRegistry.GetEventsBetweenDates(from, to);
+            return Ok(list);
+        }
+
+        [HttpGet("{id}/Orientation/{from}/{to}")]
+        public async Task<ActionResult<StressEvent>> GetOrientationEvents(Guid id, DateTime from, DateTime to)
+        {
+            var child = await _repo.FindById(id);
+            if (child == null)
+            {
+                return NotFound();
+            }
+
+            var list = (child.Features as PWAFeatures).OrientationRegistry.GetEventsBetweenDates(from, to);
             return Ok(list);
         }
     }

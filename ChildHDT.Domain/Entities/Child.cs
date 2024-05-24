@@ -21,7 +21,6 @@ namespace ChildHDT.Domain.Entities
         // METHODS
 
         public Child(string name, string surname, int age, string classroom) { 
-            //Por factorizar
             Id = Guid.NewGuid();
             Name = name;
             Surname = surname;
