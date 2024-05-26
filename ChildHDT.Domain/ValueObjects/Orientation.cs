@@ -21,16 +21,16 @@ namespace ChildHDT.Domain.ValueObjects
         public Orientation(double angleInDegrees) 
         {
             angle = angleInDegrees;
-            CalculateProximity(angleInDegrees);
+            proximity = CalculateProximity(angleInDegrees);
         }
 
-        public void CalculateProximity(double angleInDegrees)
+        public int CalculateProximity(double angleInDegrees)
         {
             if (angleInDegrees < 0) { throw new ArgumentException(); }
-            else if (angleInDegrees <= 5) { this.proximity = 3; }
-            else if (angleInDegrees <= 25) { this.proximity = 2; }
-            else if (angleInDegrees <= 60) { this.proximity = 1; }
-            else { this.proximity = 0; }
+            else if (angleInDegrees <= 5) { return 3; }
+            else if (angleInDegrees <= 25) { return 2; }
+            else if (angleInDegrees <= 60) { return 1; }
+            else { return 0; }
         }
         public override bool Equals(object? obj)
         {
