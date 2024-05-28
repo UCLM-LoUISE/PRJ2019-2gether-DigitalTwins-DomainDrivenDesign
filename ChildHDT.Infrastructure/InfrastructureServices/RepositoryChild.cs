@@ -15,17 +15,15 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 {
     public class RepositoryChild : ControllerBase
     {
-        public int IDPrueba;
         private readonly DbContext _context;
-        protected DbSet<Child> children;
         private readonly IUnitOfwork _unitOfWork;
+        public static DbSet<Child> children;
         private static Dictionary<Guid, IFeatures> _featuresCache = new Dictionary<Guid, IFeatures>();
 
 
         public RepositoryChild(IUnitOfwork unitOfwork)
         {
             Random rnd = new Random();
-            IDPrueba = rnd.Next(100);
             _unitOfWork = unitOfwork;
             children = _unitOfWork.Context.Set<Child>();
         }
@@ -59,6 +57,19 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                 _featuresCache[child.Id] = child.Features;
             }
             return child;
+        }
+
+        public async Task<List<Child>> GetAll()
+        {
+            var childrenList = await children.ToListAsync();
+            foreach (var child in childrenList)
+            {
+                if (_featuresCache.TryGetValue(child.Id, out var features))
+                {
+                    child.Features = features;
+                }
+            }
+            return childrenList;
         }
 
         public async Task<bool> Delete(Guid id)

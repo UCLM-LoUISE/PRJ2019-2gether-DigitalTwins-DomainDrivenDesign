@@ -13,18 +13,18 @@ namespace ChildHDT.Domain.ValueObjects
         // ATTRIBUTES
         [JsonPropertyName("angle")]
         public double angle { get; set; }
-        [JsonPropertyName("proximity")]
-        public int proximity { get; set; }
+        [JsonPropertyName("score")]
+        public int score { get; set; }
         
         // METHODS
         public Orientation() { }
         public Orientation(double angleInDegrees) 
         {
             angle = angleInDegrees;
-            proximity = CalculateProximity(angleInDegrees);
+            score = CalculateScore(angleInDegrees);
         }
 
-        public int CalculateProximity(double angleInDegrees)
+        public int CalculateScore(double angleInDegrees)
         {
             if (angleInDegrees < 0) { throw new ArgumentException(); }
             else if (angleInDegrees <= 5) { return 3; }
@@ -40,7 +40,7 @@ namespace ChildHDT.Domain.ValueObjects
             }
 
             Orientation other = (Orientation)obj;
-            return angle == other.angle && proximity == other.proximity;
+            return angle == other.angle && score == other.score;
         }
     }
 }

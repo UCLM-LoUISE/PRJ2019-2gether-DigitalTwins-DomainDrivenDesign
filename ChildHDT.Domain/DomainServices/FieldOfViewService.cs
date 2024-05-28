@@ -11,7 +11,7 @@ namespace ChildHDT.Domain.DomainServices
     {
         // METHODS
 
-        public Orientation CalculateFieldOfViewService(Location one, Location other, double azimuth)
+        public static Orientation CalculateFieldOfViewService(Location one, Location other, double azimuth)
         {
 
             double x1 = one.Latitude, y1 = one.Longitude;

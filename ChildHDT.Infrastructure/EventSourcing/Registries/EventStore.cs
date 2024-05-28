@@ -66,6 +66,11 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
             return Events;
         }
 
+        public T GetLastEvent()
+        {
+            return Events[Events.Count - 1];
+        }
+
         public List<T> GetEventsBetweenDates(DateTime from, DateTime to)
         {
             if (from > to)

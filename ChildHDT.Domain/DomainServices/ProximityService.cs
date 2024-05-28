@@ -14,7 +14,7 @@ namespace ChildHDT.Domain.DomainServices
         const double earthRadiusKm = 6371;
             
         // METHODS
-        public double CalculateProximity(Location first, Location second)
+        public static double CalculateProximity(Location first, Location second)
         {
 
             var dLat = DegreeToRadian(first.Latitude - second.Latitude);
@@ -30,7 +30,7 @@ namespace ChildHDT.Domain.DomainServices
             return distance;
         }
 
-        private double DegreeToRadian(double angle)
+        private static double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;
         }

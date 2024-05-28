@@ -25,9 +25,10 @@ namespace ChildHDT.API.Controllers
         private readonly IOptions<MQTTSettings> _mqttSettings;
         private readonly IOptions<RabbitMQSettings> _rabbitmqSettings;
         private readonly IOptions<PostgreSQLSettings> _postgreSQLSettings;
+        private readonly IOptions<StressMonitoringService> _stressMonitoring;
         private readonly RoleAssignment _roleAssignment;
 
-        public ChildController(IUnitOfwork unitOfwork, IOptions<MQTTSettings> mqttSettings, IOptions<RabbitMQSettings> rabbitMQSettings, IOptions<PostgreSQLSettings> postgreSQLSettings)
+        public ChildController(IUnitOfwork unitOfwork, IOptions<MQTTSettings> mqttSettings, IOptions<RabbitMQSettings> rabbitMQSettings, IOptions<PostgreSQLSettings> postgreSQLSettings, IOptions<StressMonitoringService> stressMonitoring)
         {
             _unitOfWork = unitOfwork;
             _repo = new RepositoryChild(unitOfwork);
@@ -35,6 +36,7 @@ namespace ChildHDT.API.Controllers
             _mqttSettings = mqttSettings;
             _rabbitmqSettings = rabbitMQSettings;
             _postgreSQLSettings = postgreSQLSettings;
+            _stressMonitoring = stressMonitoring;
         }
 
         //public IActionResult About()

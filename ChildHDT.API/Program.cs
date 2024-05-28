@@ -23,26 +23,26 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfwork, UnitOfwork>();
 builder.Services.AddScoped<RepositoryChild>();
 
-builder.Services.AddHttpsRedirection(options =>
-{
-    options.RedirectStatusCode = Status307TemporaryRedirect;
-    options.HttpsPort = 5001;
-});
+//builder.Services.AddHttpsRedirection(options =>
+//{
+//    options.RedirectStatusCode = Status307TemporaryRedirect;
+//    options.HttpsPort = 5001;
+//});
 
 builder.Services.Configure<MQTTSettings>(builder.Configuration.GetSection("MQTTSettings"));
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQSettings"));
 builder.Services.Configure<PostgreSQLSettings>(builder.Configuration.GetSection("PostgreSQLSettings"));
 
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -1,4 +1,5 @@
-﻿using ChildHDT.Domain.ValueObjects;
+﻿using ChildHDT.Domain.DomainServices;
+using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.EventSourcing.Registries;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
         public LocationRegistry LocationRegistry { get; set; }
         public OrientationRegistry OrientationRegistry { get; set; }
         public StressRegistry StressRegistry { get; set; }
+
         public PWAFeatures(Guid childId) 
         {
             SpeedRegistry = new SpeedRegistry(childId);
