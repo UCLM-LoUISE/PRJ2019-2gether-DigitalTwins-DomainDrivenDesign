@@ -9,6 +9,7 @@ using ChildHDT.Infrastructure.InfrastructureServices.Context;
 using ChildHDT.Infrastructure.IntegrationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
@@ -19,29 +20,35 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
         private readonly IUnitOfwork _unitOfWork;
         public static DbSet<Child> children;
         private static Dictionary<Guid, IFeatures> _featuresCache = new Dictionary<Guid, IFeatures>();
+        private readonly IConfiguration _configuration;
         public string server;
         public int port;
         public string user;
         public string pwd;
 
 
-        public RepositoryChild(IUnitOfwork unitOfwork, string server, int port, string user, string pwd)
+        public RepositoryChild(IUnitOfwork unitOfwork, IConfiguration configuration)
         {
             Random rnd = new Random();
             _unitOfWork = unitOfwork;
             children = _unitOfWork.Context.Set<Child>();
-            this.server = server;
-            this.port = port;
-            this.user = user;
-            this.pwd = pwd;
+            _configuration = configuration;
+            server = _configuration["MQTT:Server"];
+            port = Convert.ToInt32(_configuration["MQTT:Port"]);
+            user = _configuration["MQTT:UserName"];
+            pwd = _configuration["MQTT:Password"];
         }
 
         public async Task<Child> FindById(Guid id)
         {
             var data = await children.FindAsync(id);
-            if (data != null && _featuresCache.TryGetValue(id, out var features))
+            if (data == null) return null;
+            if (_featuresCache.TryGetValue(id, out var features))
             {
                 data.Features = features;
+            } else
+            {
+                data.Features = new PWAFeatures(data.Id, _configuration);
             }
             return data;
         }
@@ -50,7 +57,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
         {
             children.Add(child);
             await _unitOfWork.SaveChangesAsync();
-            child.Features = new PWAFeatures(child.Id, server, port, user, pwd);
+            child.Features = new PWAFeatures(child.Id, _configuration);
             _featuresCache[child.Id] = child.Features;
             var prueba = _featuresCache;
             return child;
@@ -75,6 +82,10 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                 if (_featuresCache.TryGetValue(child.Id, out var features))
                 {
                     child.Features = features;
+                }
+                else
+                {
+                    child.Features = new PWAFeatures(child.Id, _configuration);
                 }
             }
             return childrenList;

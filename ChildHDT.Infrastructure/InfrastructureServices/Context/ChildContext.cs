@@ -16,20 +16,8 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Context
         // ATTRIBUTES
         public DbSet<Child> Children { get; set; }
 
-        public string connectionString;
-
-        public ChildContext (string connectionString)
+        public ChildContext(DbContextOptions<ChildContext> options) : base(options)
         {
-            this.connectionString = connectionString;
-        }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(connectionString);
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

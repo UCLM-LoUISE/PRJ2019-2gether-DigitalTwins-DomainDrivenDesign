@@ -28,11 +28,7 @@ namespace ChildHDT.API.Controllers
         {
             _unitOfWork = unitOfwork;
             _configuration = configuration;
-            var server = _configuration["MQTT:Server"];
-            var port = Convert.ToInt32(_configuration["MQTT:Port"]);
-            var user = _configuration["MQTT:UserName"]; 
-            var pwd = _configuration["MQTT:Password"];
-            _repo = new RepositoryChild(unitOfwork, server, port, user, pwd);
+            _repo = new RepositoryChild(unitOfwork, _configuration);
             _roleAssignment = new RoleAssignment(_repo);
         }
 
