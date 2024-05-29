@@ -23,7 +23,7 @@ namespace ChildHDT.API.ApplicationServices
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
             await Task.CompletedTask;
         }
 

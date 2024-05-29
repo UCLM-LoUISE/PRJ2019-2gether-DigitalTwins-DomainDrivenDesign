@@ -16,6 +16,12 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
     {
         public StressRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "stress", server, port, user, pwd) { }
 
+        public override StressEvent GetLastEvent()
+        {
+            if (Events.Count == 0) return new StressEvent(new Stress(0, "Controlled"), DateTime.Now);
+            return Events[Events.Count - 1];
+        }
+
         protected override StressEvent DeserializeEvent(string payload)
         {
             var data = JsonSerializer.Deserialize<Stress>(payload);

@@ -15,6 +15,12 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
     {
         public OrientationRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "orientation", server, port, user, pwd) { }
 
+        public override OrientationEvent GetLastEvent()
+        {
+            if (Events.Count == 0) return new OrientationEvent(new Orientation(0), DateTime.Now);
+            return Events[Events.Count - 1];
+        }
+
         protected override OrientationEvent DeserializeEvent(string payload)
         {
             var data = JsonSerializer.Deserialize<Orientation>(payload);

@@ -15,6 +15,12 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
     {
         public LocationRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "location", server, port, user, pwd) { }
 
+        public override LocationEvent GetLastEvent()
+        {
+            if (Events.Count == 0) return new LocationEvent(new Location(0,0),DateTime.Now);
+            return Events[Events.Count - 1];
+        }
+
         protected override LocationEvent DeserializeEvent(string payload)
         {
             var data = JsonSerializer.Deserialize<Location>(payload);

@@ -10,26 +10,26 @@ using ChildHDT.Infrastructure.IntegrationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Net.Http.Headers;
+using System.Threading;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
 {
     public class RepositoryChild : ControllerBase
     {
-        private readonly DbContext _context;
         private readonly IUnitOfwork _unitOfWork;
-        public static DbSet<Child> children;
+        private static DbSet<Child> children;
         private static Dictionary<Guid, IFeatures> _featuresCache = new Dictionary<Guid, IFeatures>();
         private readonly IConfiguration _configuration;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
         public string server;
         public int port;
         public string user;
         public string pwd;
 
-
-        public RepositoryChild(IUnitOfwork unitOfwork, IConfiguration configuration)
+        public RepositoryChild(IUnitOfwork unitOfWork, IConfiguration configuration)
         {
-            _unitOfWork = unitOfwork;
+            _unitOfWork = unitOfWork;
             children = _unitOfWork.Context.Set<Child>();
             _configuration = configuration;
             server = _configuration["MQTT:Server"];
@@ -40,9 +40,9 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public async Task<Child> FindById(Guid id)
         {
-            using (var context = _unitOfWork.Context)
+            await _semaphore.WaitAsync();
+            try
             {
-                var children = context.Set<Child>();
                 var data = await children.FindAsync(id);
                 if (data == null) return null;
                 if (_featuresCache.TryGetValue(id, out var features))
@@ -55,27 +55,34 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                 }
                 return data;
             }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<Child> Add(Child child)
         {
-            using (var context = _unitOfWork.Context)
+            await _semaphore.WaitAsync();
+            try
             {
-                var children = context.Set<Child>();
                 children.Add(child);
                 await _unitOfWork.SaveChangesAsync();
                 child.Features = new PWAFeatures(child.Id, _configuration);
                 _featuresCache[child.Id] = child.Features;
-                var prueba = _featuresCache;
                 return child;
+            }
+            finally
+            {
+                _semaphore.Release();
             }
         }
 
         public async Task<Child> Update(Child child)
         {
-            using (var context = _unitOfWork.Context)
+            await _semaphore.WaitAsync();
+            try
             {
-                var children = context.Set<Child>();
                 children.Update(child);
                 await _unitOfWork.SaveChangesAsync();
                 if (child.Features != null)
@@ -84,15 +91,18 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                 }
                 return child;
             }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<List<Child>> GetAll()
         {
-            using (var context = _unitOfWork.Context)
+            await _semaphore.WaitAsync();
+            try
             {
-                var children = context.Set<Child>();
                 var childrenList = await children.ToListAsync();
-
                 foreach (var child in childrenList)
                 {
                     if (_featuresCache.TryGetValue(child.Id, out var features))
@@ -106,19 +116,28 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                 }
                 return childrenList;
             }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
-
 
         public async Task<bool> Delete(Guid id)
         {
-            var data = await children.FindAsync(id);
-            if (data == null) return false;
-
-            children.Remove(data);
-            await _unitOfWork.SaveChangesAsync();
-            _featuresCache.Remove(id);
-            return true;
-
+            await _semaphore.WaitAsync();
+            try
+            {
+                var data = await children.FindAsync(id);
+                if (data == null) return false;
+                children.Remove(data);
+                await _unitOfWork.SaveChangesAsync();
+                _featuresCache.Remove(id);
+                return true;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
     }
 }

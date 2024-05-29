@@ -15,6 +15,12 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
     {
         public SpeedRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "speed", server, port, user, pwd) { }
 
+        public override SpeedEvent GetLastEvent()
+        {
+            if (Events.Count == 0) return new SpeedEvent(new SpeedMS(0), DateTime.Now);
+            return Events[Events.Count - 1];
+        }
+
         protected override SpeedEvent DeserializeEvent(string payload)
         {
 

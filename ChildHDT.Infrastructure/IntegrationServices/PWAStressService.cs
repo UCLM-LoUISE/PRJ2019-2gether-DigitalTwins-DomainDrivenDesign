@@ -46,6 +46,10 @@ namespace ChildHDT.Infrastructure.IntegrationServices
             }
             var children = rc.GetAll();
             var bully = await GetClosestBully(child);
+            if (bully == null)
+            {
+                return new Stress(0, "Controlled");
+            }
             var locationChild = (child.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;
             var locationBully = (bully.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;
             var orientation = (child.Features as PWAFeatures).OrientationRegistry.GetLastEvent().Orientation;
