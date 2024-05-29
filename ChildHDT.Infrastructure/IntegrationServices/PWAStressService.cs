@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using ChildHDT.Infrastructure.InfrastructureServices;
 using RabbitMQ.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace ChildHDT.Infrastructure.IntegrationServices
 {
@@ -23,15 +24,17 @@ namespace ChildHDT.Infrastructure.IntegrationServices
         private readonly string apiUrl;
         private readonly Thread stressThread;
         private bool isRunning;
+        private readonly IConfiguration _configuration;
 
         // METHODS
 
-        public PWAStressService(INotificationHandler nh, RepositoryChild rc, string url) 
+        public PWAStressService(INotificationHandler nh, RepositoryChild rc, IConfiguration configuration) 
         {
             notificationHandler = nh;
             httpClient = new HttpClient();
             this.rc = rc;
-            apiUrl = url;
+            _configuration = configuration;
+            apiUrl = _configuration["API__URL"];
         }
 
         public async Task<Stress> CalculateStress(Child child)
