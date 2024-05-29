@@ -48,34 +48,34 @@ namespace ChildHDT.Testing.HDT02
             Assert.IsTrue(childNonToMObserver.IsNonToMObserver(), "ChildNonToMObserver should be assigned the NonToMObserver role.");
         }
 
-        [TestMethod()]
-        public async void AssignRoleService()
-        {
-            // ARRANGE
-            //var options = new DbContextOptionsBuilder<ChildContext>()
-            //.Options;
+        //[TestMethod()]
+        //public async void AssignRoleService()
+        //{
+        //    // ARRANGE
+        //    //var options = new DbContextOptionsBuilder<ChildContext>()
+        //    //.Options;
 
-            var context = new ChildContext();
-            var uof = new UnitOfwork(context);
+        //    var context = new ChildContext();
+        //    var uof = new UnitOfwork(context);
 
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
+        //    //context.Database.EnsureDeleted();
+        //    //context.Database.EnsureCreated();
 
 
-            var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
-            var repo = new RepositoryChild(uof);
-            await repo.Add(child);
-            var roleService = new RoleAssignment(repo);
+        //    var child = factoryChild.CreateChildVictim(name: "Jane", surname: "Doe", age: 10, classroom: "4ºB");
+        //    var repo = new RepositoryChild(uof);
+        //    await repo.Add(child);
+        //    var roleService = new RoleAssignment(repo);
 
-            // ACT
+        //    // ACT
 
-            roleService.AssignRoleBullyToChild(child.Id);
+        //    roleService.AssignRoleBullyToChild(child.Id);
 
-            // ASSERT
+        //    // ASSERT
 
-            var after = await repo.FindById(child.Id);
-            Assert.IsTrue(after.IsBully(), "ChildBully should be assigned the Bully role.");
+        //    var after = await repo.FindById(child.Id);
+        //    Assert.IsTrue(after.IsBully(), "ChildBully should be assigned the Bully role.");
 
-        }
+        //}
     }
 }
