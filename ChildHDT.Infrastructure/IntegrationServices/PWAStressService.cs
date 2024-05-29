@@ -20,18 +20,18 @@ namespace ChildHDT.Infrastructure.IntegrationServices
         private readonly INotificationHandler notificationHandler;
         private readonly HttpClient httpClient;
         private readonly RepositoryChild rc;
-        private static readonly string apiUrl = "http://localhost:8081/calculate_stress";
+        private readonly string apiUrl;
         private readonly Thread stressThread;
         private bool isRunning;
 
         // METHODS
 
-        public PWAStressService(INotificationHandler nh, RepositoryChild rc) 
+        public PWAStressService(INotificationHandler nh, RepositoryChild rc, string url) 
         {
             notificationHandler = nh;
             httpClient = new HttpClient();
             this.rc = rc;
-
+            apiUrl = url;
         }
 
         public async Task<Stress> CalculateStress(Child child)

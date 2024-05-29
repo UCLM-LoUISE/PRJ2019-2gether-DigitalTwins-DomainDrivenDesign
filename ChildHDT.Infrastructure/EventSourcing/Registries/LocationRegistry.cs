@@ -13,7 +13,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class LocationRegistry : EventStore<LocationEvent>
     {
-        public LocationRegistry(Guid id) : base(id, "location") { }
+        public LocationRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "location", server, port, user, pwd) { }
 
         protected override LocationEvent DeserializeEvent(string payload)
         {

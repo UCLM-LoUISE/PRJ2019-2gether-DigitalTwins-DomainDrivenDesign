@@ -10,10 +10,12 @@ namespace ChildHDT.API.ApplicationServices
         // ATTRIBUTES
 
         private Messaging messaging;
+        private readonly IConfiguration _configuration;
         
-        public NotificationHandler ()
+        public NotificationHandler (IConfiguration configuration)
         {
-            messaging = new Messaging();
+            _configuration = configuration;
+            messaging = new Messaging(_configuration["RabbitMQ:HostName"]);
         }
 
         // METHODS

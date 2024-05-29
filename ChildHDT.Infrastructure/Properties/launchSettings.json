@@ -10,7 +10,8 @@
         "MQTT__Server": "172.19.168.212",
         "MQTT__Port": "1883",
         "MQTT__UserName": "admin",
-        "MQTT__Password": "public"
+        "MQTT__Password": "public",
+        "API__URL": "http://localhost:8081/calculate_stress"
       }
     },
     "ChildHDT": {
@@ -25,7 +26,8 @@
         "MQTT__Server": "172.19.168.212",
         "MQTT__Port": "1883",
         "MQTT__UserName": "admin",
-        "MQTT__Password": "public"
+        "MQTT__Password": "public",
+        "API__URL": "http://localhost:8081/calculate_stress"
       }
     }
   }

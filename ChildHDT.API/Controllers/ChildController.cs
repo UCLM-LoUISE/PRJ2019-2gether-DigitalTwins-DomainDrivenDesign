@@ -6,7 +6,6 @@ using ChildHDT.Infrastructure.EventSourcing.Registries;
 using ChildHDT.Infrastructure.InfrastructureServices;
 using ChildHDT.Infrastructure.InfrastructureServices.Context;
 using ChildHDT.Infrastructure.IntegrationServices;
-using ChildHDT.Infrastructure.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -22,29 +21,20 @@ namespace ChildHDT.API.Controllers
     {
         private readonly IUnitOfwork _unitOfWork;
         private readonly RepositoryChild _repo;
-        private readonly IOptions<MQTTSettings> _mqttSettings;
-        private readonly IOptions<RabbitMQSettings> _rabbitmqSettings;
-        private readonly IOptions<PostgreSQLSettings> _postgreSQLSettings;
-        private readonly IOptions<StressMonitoringService> _stressMonitoring;
         private readonly RoleAssignment _roleAssignment;
+        private readonly IConfiguration _configuration;
 
-        public ChildController(IUnitOfwork unitOfwork, IOptions<MQTTSettings> mqttSettings, IOptions<RabbitMQSettings> rabbitMQSettings, IOptions<PostgreSQLSettings> postgreSQLSettings, IOptions<StressMonitoringService> stressMonitoring)
+        public ChildController(IUnitOfwork unitOfwork, IConfiguration configuration)
         {
             _unitOfWork = unitOfwork;
-            _repo = new RepositoryChild(unitOfwork);
+            _configuration = configuration;
+            var server = _configuration["MQTT:Server"];
+            var port = Convert.ToInt32(_configuration["MQTT:Port"]);
+            var user = _configuration["MQTT:UserName"]; 
+            var pwd = _configuration["MQTT:Password"];
+            _repo = new RepositoryChild(unitOfwork, server, port, user, pwd);
             _roleAssignment = new RoleAssignment(_repo);
-            _mqttSettings = mqttSettings;
-            _rabbitmqSettings = rabbitMQSettings;
-            _postgreSQLSettings = postgreSQLSettings;
-            _stressMonitoring = stressMonitoring;
         }
-
-        //public IActionResult About()
-        //{
-        //    ViewData["Hostname"] = _rabbitmqSettings.Value.Hostname;
-        //    ViewData["ConnectionString"] = _postgreSQLSettings.Value.ConnectionString;
-        //    ViewData["Server"] = _mqttSettings.Value.Server;
-        //}
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Child>> GetChild(Guid id)

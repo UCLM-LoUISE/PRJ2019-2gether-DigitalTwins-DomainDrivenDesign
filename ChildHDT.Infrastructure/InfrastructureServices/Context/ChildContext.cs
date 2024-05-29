@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChildHDT.Infrastructure.Settings;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices.Context
 {
@@ -17,19 +16,19 @@ namespace ChildHDT.Infrastructure.InfrastructureServices.Context
         // ATTRIBUTES
         public DbSet<Child> Children { get; set; }
 
-        //public ChildContext(DbContextOptions<ChildContext> options) : base(options)
-        //{
-        //}
+        public string connectionString;
+
+        public ChildContext (string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //var connectionString = PostgreSQLSettings.ConnectionString;
-                optionsBuilder.UseNpgsql("Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword");
-                //optionsBuilder.UseNpgsql(connectionString);
-                //var connectionString = Configuration.GetConnectionString("PosgtgreSQL");
-                //optionsBuilder.UseNpgsql(connectionString);
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 

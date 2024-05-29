@@ -13,7 +13,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class OrientationRegistry : EventStore<OrientationEvent>
     {
-        public OrientationRegistry(Guid id) : base(id, "orientation") { }
+        public OrientationRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "orientation", server, port, user, pwd) { }
 
         protected override OrientationEvent DeserializeEvent(string payload)
         {

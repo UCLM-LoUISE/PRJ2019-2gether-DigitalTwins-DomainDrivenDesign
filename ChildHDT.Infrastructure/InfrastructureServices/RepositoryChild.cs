@@ -19,13 +19,21 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
         private readonly IUnitOfwork _unitOfWork;
         public static DbSet<Child> children;
         private static Dictionary<Guid, IFeatures> _featuresCache = new Dictionary<Guid, IFeatures>();
+        public string server;
+        public int port;
+        public string user;
+        public string pwd;
 
 
-        public RepositoryChild(IUnitOfwork unitOfwork)
+        public RepositoryChild(IUnitOfwork unitOfwork, string server, int port, string user, string pwd)
         {
             Random rnd = new Random();
             _unitOfWork = unitOfwork;
             children = _unitOfWork.Context.Set<Child>();
+            this.server = server;
+            this.port = port;
+            this.user = user;
+            this.pwd = pwd;
         }
 
         public async Task<Child> FindById(Guid id)
@@ -42,7 +50,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
         {
             children.Add(child);
             await _unitOfWork.SaveChangesAsync();
-            child.Features = new PWAFeatures(child.Id);
+            child.Features = new PWAFeatures(child.Id, server, port, user, pwd);
             _featuresCache[child.Id] = child.Features;
             var prueba = _featuresCache;
             return child;

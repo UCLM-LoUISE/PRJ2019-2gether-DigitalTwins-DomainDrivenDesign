@@ -16,7 +16,14 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7221;http://localhost:5037",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__PostgreSQL": "Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword",
+        "RabbitMQ__HostName": "localhost",
+        "MQTT__Server": "172.19.168.212",
+        "MQTT__Port": "1883",
+        "MQTT__UserName": "admin",
+        "MQTT__Password": "public",
+        "API__URL": "http://localhost:8081/calculate_stress"
       }
     },
     "IIS Express": {
@@ -29,3 +36,6 @@
     }
   }
 }
+
+
+
