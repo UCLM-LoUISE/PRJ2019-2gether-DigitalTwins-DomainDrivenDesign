@@ -27,4 +27,10 @@
     <ProjectReference Include="..\ChildHDT.Infrastructure\ChildHDT.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="C:\Users\LoUISE_PC1\source\repos\UCLM-LoUISE\PRJ2019-2gether-Julian\InChild.Infrastructure\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

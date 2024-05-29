@@ -29,9 +29,20 @@ builder.Services.AddScoped<RepositoryChild>();
 //    options.HttpsPort = 5001;
 //});
 
-builder.Services.Configure<MQTTSettings>(builder.Configuration.GetSection("MQTTSettings"));
-builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQSettings"));
-builder.Services.Configure<PostgreSQLSettings>(builder.Configuration.GetSection("PostgreSQLSettings"));
+var basePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "Infrastructure"));
+var settingsPath = Path.Combine(basePath, "appsettings.json");
+builder.Configuration.AddJsonFile(settingsPath, optional: true, reloadOnChange: true);
+
+var postgreSqlSettings = builder.Configuration.GetSection("PostgreSQLSettings").Get<PostgreSQLSettings>();
+
+// Add DbContext with connection string from configuration
+//builder.Services.AddDbContext<ChildContext>(options =>
+//    options.UseNpgsql(postgreSqlSettings.ConnectionString));
+
+
+//builder.Services.Configure<MQTTSettings>(builder.Configuration.GetSection("MQTTSettings"));
+//builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQSettings"));
+//builder.Services.Configure<PostgreSQLSettings>(builder.Configuration.GetSection("PostgreSQLSettings"));
 
 
 var app = builder.Build();

@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
+using ChildHDT.Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -17,8 +18,9 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public Messaging()
         {
-            var hostname = Environment.GetEnvironmentVariable("RabbitMQ__HostName");
-            if (hostname is null) hostname = "localhost";
+            //var hostname = Environment.GetEnvironmentVariable("RabbitMQ__HostName");
+            //if (hostname is null) hostname = "localhost";
+            var hostname = RabbitMQSettings.Hostname;
             var factory = new ConnectionFactory() { HostName =  hostname};
             connection = factory.CreateConnection();
             channel = connection.CreateModel();

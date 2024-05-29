@@ -8,6 +8,6 @@ namespace ChildHDT.Infrastructure.Settings
 {
     public class RabbitMQSettings
     {
-        public string Hostname { get; set; }
+        public static string Hostname { get; set; }
     }
 }
