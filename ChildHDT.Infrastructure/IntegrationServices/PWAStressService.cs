@@ -42,7 +42,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
             // METHOD ONLY CALLED BY VICTIMS
 
             var children = rc.GetAll();
-            var bully = GetClosestBully(child).Result;
+            var bully = await GetClosestBully(child);
             var locationChild = (child.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;
             var locationBully = (bully.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;
             var orientation = (child.Features as PWAFeatures).OrientationRegistry.GetLastEvent().Orientation;

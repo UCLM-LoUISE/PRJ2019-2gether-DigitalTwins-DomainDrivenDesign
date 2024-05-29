@@ -25,7 +25,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
         public int port;
         public string user;
         public string pwd;
-
+        private static readonly object _databaseLock = new object();
 
         public RepositoryChild(IUnitOfwork unitOfwork, IConfiguration configuration)
         {
@@ -41,12 +41,18 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public async Task<Child> FindById(Guid id)
         {
-            var data = await children.FindAsync(id);
+            Child data;
+            lock (_databaseLock)
+            {
+                data = children.Find(id);
+            }
+
             if (data == null) return null;
             if (_featuresCache.TryGetValue(id, out var features))
             {
                 data.Features = features;
-            } else
+            }
+            else
             {
                 data.Features = new PWAFeatures(data.Id, _configuration);
             }
@@ -55,17 +61,22 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public async Task<Child> Add(Child child)
         {
-            children.Add(child);
+            lock (_databaseLock)
+            {
+                children.Add(child);
+            }
             await _unitOfWork.SaveChangesAsync();
             child.Features = new PWAFeatures(child.Id, _configuration);
             _featuresCache[child.Id] = child.Features;
-            var prueba = _featuresCache;
             return child;
         }
 
         public async Task<Child> Update(Child child)
         {
-            children.Update(child);
+            lock (_databaseLock)
+            {
+                children.Update(child);
+            }
             await _unitOfWork.SaveChangesAsync();
             if (child.Features != null)
             {
@@ -76,7 +87,12 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
 
         public async Task<List<Child>> GetAll()
         {
-            var childrenList = await children.ToListAsync();
+            List<Child> childrenList;
+            lock (_databaseLock)
+            {
+                childrenList = await children.ToListAsync();
+            }
+
             foreach (var child in childrenList)
             {
                 if (_featuresCache.TryGetValue(child.Id, out var features))
@@ -88,19 +104,23 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
                     child.Features = new PWAFeatures(child.Id, _configuration);
                 }
             }
+
             return childrenList;
         }
 
         public async Task<bool> Delete(Guid id)
         {
-            var data = await children.FindAsync(id);
-            if (data == null) return false;
-            
-            children.Remove(data);
+            Child data;
+            lock (_databaseLock)
+            {
+                data = await children.FindAsync(id);
+                if (data == null) return false;
+
+                children.Remove(data);
+            }
             await _unitOfWork.SaveChangesAsync();
             _featuresCache.Remove(id);
             return true;
-            
         }
     }
 }

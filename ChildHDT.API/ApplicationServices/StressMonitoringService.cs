@@ -13,14 +13,12 @@ namespace ChildHDT.API.ApplicationServices
 {
     public class StressMonitoringService : IHostedService
     {
-        private readonly IStressService stressService;
-        private readonly RepositoryChild rc;
+        private readonly IServiceScopeFactory _scopeFactory;
         private Timer _timer;
 
-        public StressMonitoringService(IStressService stressService, RepositoryChild rc)
+        public StressMonitoringService(IServiceScopeFactory scopeFactory)
         {
-            this.stressService = stressService;
-            this.rc = rc;
+            _scopeFactory = scopeFactory;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -35,15 +33,20 @@ namespace ChildHDT.API.ApplicationServices
             await Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private async void DoWork(object state)
         {
-            var children = rc.GetAll().Result;
-            foreach (var child in children)
+            using (var scope = _scopeFactory.CreateScope())
             {
-                var stressResult = stressService.CalculateStress(child).Result;
-                (child.Features as PWAFeatures)?.StressRegistry.ReceiveEvent(new StressEvent(stressResult, DateTime.Now));
+                var stressService = scope.ServiceProvider.GetRequiredService<IStressService>();
+                var rc = scope.ServiceProvider.GetRequiredService<RepositoryChild>();
+
+                var children = await rc.GetAll();
+                foreach (var child in children)
+                {
+                    var stressResult = await stressService.CalculateStress(child);
+                    (child.Features as PWAFeatures)?.StressRegistry.ReceiveEvent(new StressEvent(stressResult, DateTime.Now));
+                }
             }
         }
-        
     }
 }
