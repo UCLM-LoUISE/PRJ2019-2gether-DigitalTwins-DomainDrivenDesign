@@ -15,40 +15,35 @@ namespace ChildHDT.API.ApplicationServices
     {
         private readonly IStressService stressService;
         private readonly RepositoryChild rc;
-        private bool isRunning;
+        private Timer _timer;
 
         public StressMonitoringService(IStressService stressService, RepositoryChild rc)
         {
             this.stressService = stressService;
             this.rc = rc;
-            isRunning = true;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            isRunning = true;
-            await ExecuteAsync(cancellationToken);
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            await Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            isRunning = false;
+            _timer?.Change(Timeout.Infinite, 0);
             await Task.CompletedTask;
         }
 
-        private async Task ExecuteAsync(CancellationToken stoppingToken)
+        private void DoWork(object state)
         {
-            while (!stoppingToken.IsCancellationRequested && isRunning)
+            var children = rc.GetAll().Result;
+            foreach (var child in children)
             {
-                var children = await rc.GetAll();
-                foreach (var child in children)
-                {
-                    var stressResult = await stressService.CalculateStress(child);
-                    (child.Features as PWAFeatures)?.StressRegistry.ReceiveEvent(new StressEvent(stressResult, DateTime.Now));
-                }
-
-                await Task.Delay(4000, stoppingToken);
+                var stressResult = stressService.CalculateStress(child).Result;
+                (child.Features as PWAFeatures)?.StressRegistry.ReceiveEvent(new StressEvent(stressResult, DateTime.Now));
             }
         }
+        
     }
 }

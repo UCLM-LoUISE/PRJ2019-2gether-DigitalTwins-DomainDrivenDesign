@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfwork, UnitOfwork>();
 builder.Services.AddScoped<RepositoryChild>();
 builder.Services.AddScoped<INotificationHandler, NotificationHandler>();
-builder.Services.AddScoped<PWAStressService>();
+builder.Services.AddScoped<IStressService, PWAStressService>();
 builder.Services.AddHostedService<StressMonitoringService>();
 
 var app = builder.Build();
