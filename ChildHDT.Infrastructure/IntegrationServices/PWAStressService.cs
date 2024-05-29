@@ -40,7 +40,10 @@ namespace ChildHDT.Infrastructure.IntegrationServices
         public async Task<Stress> CalculateStress(Child child)
         {
             // METHOD ONLY CALLED BY VICTIMS
-
+            if (!child.IsVictim())
+            {
+                return new Stress(0,"Controlled");
+            }
             var children = rc.GetAll();
             var bully = await GetClosestBully(child);
             var locationChild = (child.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;

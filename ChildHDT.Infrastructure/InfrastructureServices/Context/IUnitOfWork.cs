@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices.Context
 {
-    public interface IUnitOfwork : IDisposable
+    public interface IUnitOfwork
     {
         DbContext Context { get; }
         public Task SaveChangesAsync();
