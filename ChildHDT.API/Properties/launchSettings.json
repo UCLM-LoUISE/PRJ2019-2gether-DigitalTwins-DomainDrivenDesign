@@ -23,7 +23,7 @@
         "MQTT__Port": "1883",
         "MQTT__UserName": "admin",
         "MQTT__Password": "public",
-        "API__URL": "http://localhost:8081/calculate_stress"
+        "API__URL": "http://localhost:8081/stresslevel"
       }
     },
     "IIS Express": {

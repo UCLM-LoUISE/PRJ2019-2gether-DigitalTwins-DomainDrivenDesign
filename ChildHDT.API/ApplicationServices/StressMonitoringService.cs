@@ -45,6 +45,7 @@ namespace ChildHDT.API.ApplicationServices
                 {
                     var stressResult = await stressService.CalculateStress(child);
                     (child.Features as PWAFeatures)?.StressRegistry.ReceiveEvent(new StressEvent(stressResult, DateTime.Now));
+                    rc.UpdateFeaturesCache(child.Id, child.Features);
                 }
             }
         }

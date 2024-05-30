@@ -18,7 +18,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
     {
         private readonly IUnitOfwork _unitOfWork;
         private static DbSet<Child> children;
-        private static Dictionary<Guid, IFeatures> _featuresCache = new Dictionary<Guid, IFeatures>();
+        private Dictionary<Guid, IFeatures> _featuresCache;
         private readonly IConfiguration _configuration;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
@@ -36,6 +36,23 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
             port = Convert.ToInt32(_configuration["MQTT:Port"]);
             user = _configuration["MQTT:UserName"];
             pwd = _configuration["MQTT:Password"];
+            InitializeFeaturesCache();
+        } 
+
+        private void InitializeFeaturesCache()
+        {
+            _featuresCache = new Dictionary<Guid, IFeatures>();
+            foreach (var child in children)
+            {
+                var features = new PWAFeatures(child.Id, _configuration);
+                child.Features = features;
+                _featuresCache[child.Id] = child.Features;
+            }
+        }
+
+        public void UpdateFeaturesCache(Guid id, IFeatures features)
+        {
+            _featuresCache[id] = features;
         }
 
         public async Task<Child> FindById(Guid id)

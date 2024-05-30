@@ -34,7 +34,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
             httpClient = new HttpClient();
             this.rc = rc;
             _configuration = configuration;
-            apiUrl = _configuration["API__URL"];
+            apiUrl = _configuration["API:URL"];
         }
 
         public async Task<Stress> CalculateStress(Child child)
@@ -57,7 +57,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
 
             var requestData = new
             {
-                anguloDeVision = FieldOfViewService.CalculateFieldOfViewService(locationChild, locationBully, orientation.angle),
+                angulo_de_vision = FieldOfViewService.CalculateFieldOfViewService(locationChild, locationBully, orientation.angle).angle,
                 proximidad = ProximityService.CalculateProximity(locationChild, locationBully),
                 velocidad = speed.value
             };
@@ -106,7 +106,7 @@ namespace ChildHDT.Infrastructure.IntegrationServices
 
             foreach (var i_child in children)
             {
-                if (i_child.IsBully()) // Solo considerar niños que sean bullies
+                if (i_child.IsBully()) 
                 {
                     childLocation = (child.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;
                     iLocation = (i_child.Features as PWAFeatures).LocationRegistry.GetLastEvent().Location;

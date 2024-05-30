@@ -23,6 +23,7 @@ namespace ChildHDT.Domain.DomainServices
             double[] vectorToSecondPerson = { x2 - x1, y2 - y1 };
 
             double magnitude = Math.Sqrt(vectorToSecondPerson[0] * vectorToSecondPerson[0] + vectorToSecondPerson[1] * vectorToSecondPerson[1]);
+            if (magnitude == 0) return new Orientation(180);
             double[] normalizedVectorToSecondPerson = { vectorToSecondPerson[0] / magnitude, vectorToSecondPerson[1] / magnitude };
 
             double dotProduct = orientationVector[0] * normalizedVectorToSecondPerson[0] + orientationVector[1] * normalizedVectorToSecondPerson[1];

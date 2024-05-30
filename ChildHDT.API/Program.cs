@@ -19,13 +19,13 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddDbContext<ChildContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")), ServiceLifetime.Singleton);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUnitOfwork, UnitOfwork>();
-builder.Services.AddScoped<RepositoryChild>();
+builder.Services.AddSingleton<IUnitOfwork, UnitOfwork>();
+builder.Services.AddSingleton<RepositoryChild>();
 builder.Services.AddScoped<INotificationHandler, NotificationHandler>();
 builder.Services.AddScoped<IStressService, PWAStressService>();
 

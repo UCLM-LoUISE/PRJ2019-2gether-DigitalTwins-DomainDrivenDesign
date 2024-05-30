@@ -24,11 +24,11 @@ namespace ChildHDT.API.Controllers
         private readonly RoleAssignment _roleAssignment;
         private readonly IConfiguration _configuration;
 
-        public ChildController(IUnitOfwork unitOfwork, IConfiguration configuration)
+        public ChildController(IUnitOfwork unitOfwork, IConfiguration configuration, RepositoryChild repositoryChild)
         {
             _unitOfWork = unitOfwork;
             _configuration = configuration;
-            _repo = new RepositoryChild(unitOfwork, _configuration);
+            _repo = repositoryChild;
             _roleAssignment = new RoleAssignment(_repo);
         }
 

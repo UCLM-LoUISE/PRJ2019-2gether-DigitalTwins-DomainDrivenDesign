@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChildHDT.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChildHDT.Testing", "ChildHDT.InfrastructureTests\ChildHDT.Testing.csproj", "{B2CF90B0-0205-4F83-BFAB-C2D22F038F20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildHDT.UIT.Testing", "ChildHDT.UIT.Testing\ChildHDT.UIT.Testing.csproj", "{4804896C-6939-4C77-876A-218C542DDB7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B2CF90B0-0205-4F83-BFAB-C2D22F038F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2CF90B0-0205-4F83-BFAB-C2D22F038F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2CF90B0-0205-4F83-BFAB-C2D22F038F20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4804896C-6939-4C77-876A-218C542DDB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4804896C-6939-4C77-876A-218C542DDB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4804896C-6939-4C77-876A-218C542DDB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4804896C-6939-4C77-876A-218C542DDB7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
