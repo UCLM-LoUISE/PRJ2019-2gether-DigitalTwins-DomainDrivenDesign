@@ -34,7 +34,10 @@ namespace ChildHDT.UIT.Testing
             _unitOfWork = new UnitOfwork(_context);
 
             var inMemorySettings = new Dictionary<string, string> {
-                {"ConnectionStrings:PostgreSQL", "Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword"}
+                {"MQTT:Server", "localhost"},
+                {"MQTT:Port", "1883"},
+                {"MQTT:UserName", "user"},
+                {"MQTT:Password", "password"}
             };
 
             _configuration = new ConfigurationBuilder()
