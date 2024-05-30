@@ -9,13 +9,19 @@ namespace ChildHDT.API.ApplicationServices
     {
         // ATTRIBUTES
 
-        private Messaging messaging;
+        private IMessaging messaging;
         private readonly IConfiguration _configuration;
         
         public NotificationHandler (IConfiguration configuration)
         {
             _configuration = configuration;
             messaging = new Messaging(_configuration["RabbitMQ:HostName"]);
+        }
+
+        public NotificationHandler(IConfiguration configuration, IMessaging messaging)
+        {
+            _configuration = configuration;
+            this.messaging = messaging;
         }
 
         // METHODS

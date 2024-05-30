@@ -2,6 +2,7 @@
 using System.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
+using ChildHDT.Domain.DomainServices;
 using ChildHDT.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
@@ -9,7 +10,7 @@ using RabbitMQ.Client.Events;
 
 namespace ChildHDT.Infrastructure.InfrastructureServices
 {
-    public class Messaging
+    public class Messaging : IMessaging
     {
         private IConnection connection;
         private IModel channel;

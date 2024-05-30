@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChildHDT.Infrastructure.InfrastructureServices;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,60 +11,41 @@ using ChildHDT.Domain.ValueObjects;
 using ChildHDT.API.ApplicationServices;
 using ChildHDT.Domain.Factory;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.InMemory.Internal;
+using ChildHDT.Domain.Entities;
+using ChildHDT.Domain.DomainServices;
 
 namespace ChildHDT.Testing.HDT01
 {
     [TestClass()]
     public class MessagingTests
     {
-
         private FactoryChild factoryChild = new FactoryChild();
-        private IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
+        private Mock<IConfiguration> _mockConfiguration;
+        private Mock<IMessaging> _mockMessaging;
+        private NotificationHandler _notificationHandler;
 
-        [TestMethod()]
-        public async Task SubscribeTestAsync()
+        [TestInitialize]
+        public void Setup()
         {
-            // ARRANGE
+            _mockConfiguration = new Mock<IConfiguration>();
+            _mockMessaging = new Mock<IMessaging>();
 
-            var messaging = new Messaging("localhost");
-            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
-
-            // ACT
-            await messaging.Subscribe(publisher.Id, "test/topic");
-
-            // ASSERT
-
+            _notificationHandler = new NotificationHandler(_mockConfiguration.Object, _mockMessaging.Object);
         }
 
-        [TestMethod()]
-        public async Task PublishTestAsync()
+        [TestMethod]
+        public void SendHelpMessage_ShouldPublishCorrectMessage()
         {
-            // ARRANGE
+            // Arrange
+            var child = factoryChild.CreateChildVictim("Harry", "Potter", 11, "Potions");
+            var expectedMessage = "Harry Potter could be suffering bullying at this moment. We advice you to take a look.";
 
-            var messaging = new Messaging("localhost");
-            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
+            // Act
+            _notificationHandler.SendHelpMessage(child);
 
-            // ACT
-            await messaging.Publish(publisher.Id, "test/topic", "TEST MESSAGE");
-
-            // ASSERT
-
-        }
-
-        [TestMethod()]
-        public async Task SendHelpMessage()
-        {
-            // ARRANGE
-
-            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
-            //var nh = new NotificationHandler();
-
-            // ACT
-            //publisher.StressLevelShotUp(nh);
-            // ASSERT
-
+            // Assert
+            _mockMessaging.Verify(m => m.Publish(child.Id, "help", expectedMessage), Times.Once);
         }
     }
 }
