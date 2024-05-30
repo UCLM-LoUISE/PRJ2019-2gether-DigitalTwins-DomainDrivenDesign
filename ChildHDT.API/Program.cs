@@ -11,7 +11,6 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de servicios
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -29,12 +28,10 @@ builder.Services.AddSingleton<RepositoryChild>();
 builder.Services.AddScoped<INotificationHandler, NotificationHandler>();
 builder.Services.AddScoped<IStressService, PWAStressService>();
 
-// Registrando StressMonitoringService como un servicio hospedado
 builder.Services.AddHostedService<StressMonitoringService>();
 
 var app = builder.Build();
 
-// Configuración del ambiente de desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

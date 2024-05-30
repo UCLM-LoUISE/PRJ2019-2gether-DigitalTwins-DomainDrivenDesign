@@ -12,6 +12,11 @@ using MQTTnet;
 using MQTTnet.Client;
 using System.Text;
 using ChildHDT.Infrastructure.IntegrationServices;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using ChildHDT.API.ApplicationServices;
+using ChildHDT.Domain.DomainServices;
+using ChildHDT.Infrastructure.EventSourcing.Events;
 
 namespace ChildHDT.UIT.Testing
 {
@@ -22,9 +27,12 @@ namespace ChildHDT.UIT.Testing
         private IUnitOfwork _unitOfWork;
         private ChildContext _context;
         private IConfiguration _configuration;
+        private IHost _host;
+        private IStressService _stressService;
+        private INotificationHandler _notificatonHandler;
 
         [TestInitialize]
-        public void SetUp()
+        public async Task SetUp()
         {
             var options = new DbContextOptionsBuilder<ChildContext>()
                 .UseInMemoryDatabase(databaseName: "ChildTestDb")
@@ -37,14 +45,34 @@ namespace ChildHDT.UIT.Testing
                 {"MQTT:Server", "localhost"},
                 {"MQTT:Port", "1883"},
                 {"MQTT:UserName", "user"},
-                {"MQTT:Password", "password"}
+                {"MQTT:Password", "password"},
+                {"ConnectionStrings:PostgreSQL", "Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword"},
+                {"RabbitMQ:HostName", "localhost"},
+                {"API:URL", "http://localhost:8081/stresslevel" }
             };
+
 
             _configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(inMemorySettings)
                 .Build();
 
             _repositoryChild = new RepositoryChild(_unitOfWork, _configuration);
+            _notificatonHandler = new NotificationHandler(_configuration);
+            _stressService = new PWAStressService(_notificatonHandler, _repositoryChild, _configuration);
+
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddSingleton(_stressService);
+                    services.AddSingleton(_notificatonHandler);
+                    services.AddSingleton(_context);
+                    services.AddSingleton(_unitOfWork);
+                    services.AddSingleton(_repositoryChild);
+                    services.AddSingleton(_configuration);
+                    services.AddHostedService<StressMonitoringService>(); 
+                })
+                .Build();
+            await _host.StartAsync(); 
         }
 
         [TestMethod]
@@ -142,6 +170,13 @@ namespace ChildHDT.UIT.Testing
             await Task.Delay(10000);
             var events = (victim.Features as PWAFeatures).StressRegistry.GetEvents();
             Assert.IsNotNull(events);
+            Assert.IsTrue(events.Count > 0);
+            var lastEvent = events[events.Count - 1];
+            Assert.IsInstanceOfType(lastEvent, typeof(StressEvent));
+            var stress = lastEvent.Stress;
+            Assert.IsTrue(stress.value >= 0);
+            Assert.IsTrue(stress.value <= 1);
+            Assert.IsTrue(stress.level == "Controlled" || stress.level == "High");
             
         }
     }

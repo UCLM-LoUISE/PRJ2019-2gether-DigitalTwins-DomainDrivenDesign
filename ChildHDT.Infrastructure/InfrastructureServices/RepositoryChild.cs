@@ -17,7 +17,7 @@ namespace ChildHDT.Infrastructure.InfrastructureServices
     public class RepositoryChild : ControllerBase
     {
         private readonly IUnitOfwork _unitOfWork;
-        private static DbSet<Child> children;
+        private DbSet<Child> children;
         private Dictionary<Guid, IFeatures> _featuresCache;
         private readonly IConfiguration _configuration;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);

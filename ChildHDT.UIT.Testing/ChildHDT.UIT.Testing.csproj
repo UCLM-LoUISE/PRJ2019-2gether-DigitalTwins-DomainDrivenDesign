@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ChildHDT.API\ChildHDT.API.csproj" />
     <ProjectReference Include="..\ChildHDT.Infrastructure\ChildHDT.Infrastructure.csproj" />
   </ItemGroup>
 
