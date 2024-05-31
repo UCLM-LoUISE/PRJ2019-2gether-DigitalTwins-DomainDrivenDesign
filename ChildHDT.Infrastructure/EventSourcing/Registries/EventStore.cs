@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text.Json;
 
 namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
@@ -23,6 +24,26 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
             _topic = "" + id + "/" + topic;
             var factory = new MqttFactory();
             _client = factory.CreateMqttClient();
+
+            var mqttServer = _configuration["MQTT:Server"];
+            var mqttPort = Convert.ToInt32(_configuration["MQTT:Port"]);
+            var mqttUserName = _configuration["MQTT:UserName"];
+            var mqttPassword = _configuration["MQTT:Password"];
+
+            var options = new MqttClientOptionsBuilder()
+                .WithClientId("ChildClient")
+                .WithTcpServer(mqttServer, mqttPort)
+                .WithCredentials(mqttUserName, mqttPassword)
+                .WithCleanSession()
+                .Build();
+
+            Start(options).Wait();
+        }
+
+        protected EventStore(Guid id, string topic, IConfiguration _configuration, IMqttClient client)
+        {
+            _topic = "" + id + "/" + topic;
+            _client = client;
 
             var mqttServer = _configuration["MQTT:Server"];
             var mqttPort = Convert.ToInt32(_configuration["MQTT:Port"]);
@@ -76,6 +97,17 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
             }
 
             return Events.Where(e => e.Timestamp >= from && e.Timestamp <= to).ToList();
+        }
+
+        public void PublishEvent(T eventData)
+        {
+            var payload = JsonSerializer.Serialize(eventData);
+            var message = new MqttApplicationMessageBuilder()
+                .WithTopic(_topic)
+                .WithPayload(payload)
+                .Build();
+
+            _client.PublishAsync(message).Wait();
         }
 
         protected abstract T DeserializeEvent(string payload);

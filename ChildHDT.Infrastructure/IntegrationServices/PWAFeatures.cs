@@ -13,7 +13,6 @@ namespace ChildHDT.Infrastructure.IntegrationServices
 {
     public class PWAFeatures: IFeatures
     {
-        private readonly IConfiguration _configuration;
         public SpeedRegistry SpeedRegistry { get; set; }
         public LocationRegistry LocationRegistry { get; set; }
         public OrientationRegistry OrientationRegistry { get; set; }
@@ -21,11 +20,10 @@ namespace ChildHDT.Infrastructure.IntegrationServices
 
         public PWAFeatures(Guid childId, IConfiguration configuration) 
         {
-            _configuration = configuration;
-            SpeedRegistry = new SpeedRegistry(childId, _configuration);
-            LocationRegistry = new LocationRegistry(childId, _configuration);
-            OrientationRegistry = new OrientationRegistry(childId, _configuration);
-            StressRegistry = new StressRegistry(childId, _configuration);
+            SpeedRegistry = new SpeedRegistry(childId, configuration);
+            LocationRegistry = new LocationRegistry(childId, configuration);
+            OrientationRegistry = new OrientationRegistry(childId, configuration);
+            StressRegistry = new StressRegistry(childId, configuration);
         }
     }
 }

@@ -2,6 +2,7 @@
 using ChildHDT.Domain.ValueObjects;
 using ChildHDT.Infrastructure.EventSourcing.Events;
 using Microsoft.Extensions.Configuration;
+using MQTTnet.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
     public class SpeedRegistry : EventStore<SpeedEvent>
     {
         public SpeedRegistry(Guid id, IConfiguration configuration) : base(id, "speed", configuration) { }
+        public SpeedRegistry(Guid id, IConfiguration configuration, IMqttClient client) : base(id, "speed", configuration, client) { }
 
         public override SpeedEvent GetLastEvent()
         {

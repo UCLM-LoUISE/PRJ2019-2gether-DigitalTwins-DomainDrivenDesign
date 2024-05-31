@@ -18,7 +18,7 @@ using ChildHDT.API.ApplicationServices;
 using ChildHDT.Domain.DomainServices;
 using ChildHDT.Infrastructure.EventSourcing.Events;
 
-namespace ChildHDT.UIT.Testing
+namespace ChildHDT.UIT.Testing.HDT05
 {
     [TestClass]
     public class IntegrationTest
@@ -69,10 +69,10 @@ namespace ChildHDT.UIT.Testing
                     services.AddSingleton(_unitOfWork);
                     services.AddSingleton(_repositoryChild);
                     services.AddSingleton(_configuration);
-                    services.AddHostedService<StressMonitoringService>(); 
+                    services.AddHostedService<StressMonitoringService>();
                 })
                 .Build();
-            await _host.StartAsync(); 
+            await _host.StartAsync();
         }
 
         [TestMethod]
@@ -109,7 +109,7 @@ namespace ChildHDT.UIT.Testing
             // ACT
 
             await mqttClient.ConnectAsync(mqttOptions, CancellationToken.None);
-            
+
 
             for (int i = 1; i <= 5; i++)
             {
@@ -162,7 +162,7 @@ namespace ChildHDT.UIT.Testing
                 await mqttClient.PublishAsync(m_b_speed);
                 await mqttClient.PublishAsync(m_v_orientation);
 
-                await Task.Delay(1000); 
+                await Task.Delay(1000);
             }
 
             // ASSERT
@@ -177,7 +177,7 @@ namespace ChildHDT.UIT.Testing
             Assert.IsTrue(stress.value >= 0);
             Assert.IsTrue(stress.value <= 1);
             Assert.IsTrue(stress.level == "Controlled" || stress.level == "High");
-            
+
         }
     }
 }
