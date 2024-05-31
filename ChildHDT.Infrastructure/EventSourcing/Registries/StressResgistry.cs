@@ -14,7 +14,7 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 {
     public class StressRegistry : EventStore<StressEvent>
     {
-        public StressRegistry(Guid id, string server, int port, string user, string pwd) : base(id, "stress", server, port, user, pwd) { }
+        public StressRegistry(Guid id, IConfiguration configuration) : base(id, "stress", configuration) { }
 
         public override StressEvent GetLastEvent()
         {

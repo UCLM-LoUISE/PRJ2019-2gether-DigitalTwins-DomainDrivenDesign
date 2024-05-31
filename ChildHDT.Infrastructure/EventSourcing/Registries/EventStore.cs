@@ -18,16 +18,16 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
         private readonly IMqttClient _client;
         private readonly string _topic;
 
-        protected EventStore (Guid id, string topic, string server, int port, string user, string pwd)
+        protected EventStore (Guid id, string topic, IConfiguration _configuration)
         {
             _topic = "" + id + "/" + topic;
             var factory = new MqttFactory();
             _client = factory.CreateMqttClient();
 
-            var mqttServer = server;
-            var mqttPort = port;
-            var mqttUserName = user;
-            var mqttPassword = pwd;
+            var mqttServer = _configuration["MQTT:Server"];
+            var mqttPort = Convert.ToInt32(_configuration["MQTT:Port"]);
+            var mqttUserName = _configuration["MQTT:UserName"];
+            var mqttPassword = _configuration["MQTT:Password"];
 
             var options = new MqttClientOptionsBuilder()
                 .WithClientId("ChildClient")

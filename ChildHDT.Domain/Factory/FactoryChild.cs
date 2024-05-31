@@ -13,6 +13,7 @@ namespace ChildHDT.Domain.Factory
     {
         public Child CreateChild(string name, string surname, int age, string classroom)
         {
+            var child = new Child(name, surname, age, classroom);
             return new Child(name, surname, age, classroom);
         }
 
