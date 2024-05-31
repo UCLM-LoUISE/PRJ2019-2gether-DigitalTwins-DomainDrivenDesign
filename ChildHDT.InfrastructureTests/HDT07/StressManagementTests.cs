@@ -1,7 +1,9 @@
 ﻿using ChildHDT.API.ApplicationServices;
+using ChildHDT.Domain.DomainServices;
 using ChildHDT.Domain.Factory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,21 +16,31 @@ namespace ChildHDT.Testing.HDT07
     public class StressManagementTests
     {
         private FactoryChild factoryChild = new FactoryChild();
-        private IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
+        private Mock<IConfiguration> _mockConfiguration;
+        private Mock<IMessaging> _mockMessaging;
+        private NotificationHandler _notificationHandler;
 
-        [TestMethod()]
-        public void StressManagementMessageTest()
+        [TestInitialize]
+        public void Setup()
         {
-            // ARRANGE
+            _mockConfiguration = new Mock<IConfiguration>();
+            _mockMessaging = new Mock<IMessaging>();
 
-            var publisher = factoryChild.CreateChildVictim(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
-            //var nh = new NotificationHandler();
+            _notificationHandler = new NotificationHandler(_mockConfiguration.Object, _mockMessaging.Object);
+        }
 
-            // ACT
-            //publisher.StressLevelShotUp(nh);
-            // ASSERT
+        [TestMethod]
+        public void ManageStressMessage_ShouldPublishCorrectMessage()
+        {
+            // Arrange
+            var child = factoryChild.CreateChildVictim("Harry", "Potter", 11, "Potions");
+            var expectedMessage = "You seem to be a bit stressed. Take a break or ask for help so that you can relax!";
+
+            // Act
+            child.StressLevelShotUp(_notificationHandler);
+
+            // Assert
+            _mockMessaging.Verify(m => m.Publish(child.Id, expectedMessage), Times.Once);
         }
     }
 }

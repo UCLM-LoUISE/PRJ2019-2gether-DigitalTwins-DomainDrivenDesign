@@ -42,7 +42,7 @@ namespace ChildHDT.Testing.HDT01
             var expectedMessage = "Harry Potter could be suffering bullying at this moment. We advice you to take a look.";
 
             // Act
-            _notificationHandler.SendHelpMessage(child);
+            child.StressLevelShotUp(_notificationHandler);
 
             // Assert
             _mockMessaging.Verify(m => m.Publish(child.Id, "help", expectedMessage), Times.Once);

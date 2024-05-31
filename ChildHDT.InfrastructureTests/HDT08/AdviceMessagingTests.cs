@@ -1,7 +1,9 @@
 ﻿using ChildHDT.API.ApplicationServices;
+using ChildHDT.Domain.DomainServices;
 using ChildHDT.Domain.Factory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,21 +16,31 @@ namespace ChildHDT.Testing.HDT08
     public class AdviceMessagingTests
     {
         private FactoryChild factoryChild = new FactoryChild();
-        private IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
+        private Mock<IConfiguration> _mockConfiguration;
+        private Mock<IMessaging> _mockMessaging;
+        private NotificationHandler _notificationHandler;
 
-        //[TestMethod()]
-        //public void AdviceMessageTest()
-        //{
-        //    // ARRANGE
+        [TestInitialize]
+        public void Setup()
+        {
+            _mockConfiguration = new Mock<IConfiguration>();
+            _mockMessaging = new Mock<IMessaging>();
 
-        //    var publisher = factoryChild.CreateChildBully(name: "Publisher", surname: "Test", age: 10, classroom: "1ºA");
-        //    var nh = new NotificationHandler();
+            _notificationHandler = new NotificationHandler(_mockConfiguration.Object, _mockMessaging.Object);
+        }
 
-        //    // ACT
-        //    publisher.StressLevelShotUp(nh);
-        //    // ASSERT
-        //}
+        [TestMethod]
+        public void AdviceMessage_ShouldPublishCorrectMessage()
+        {
+            // Arrange
+            var child = factoryChild.CreateChildBully("Draco", "Malfoy", 11, "Potions");
+            var expectedMessage = "Remember: Treating others with respect is crucial. Bullying hurts. If you need to talk, we are here to help you.";
+
+            // Act
+            child.StressLevelShotUp(_notificationHandler);
+
+            // Assert
+            _mockMessaging.Verify(m => m.Publish(child.Id, expectedMessage), Times.Once);
+        }
     }
 }
