@@ -32,7 +32,7 @@
         "API__URL": "http://161.67.133.210:8081/stresslevel"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://161.67.133.210:7221asf;http://161.67.133.210:5037"
+      "applicationUrl": "https://161.67.133.210:8055;http://161.67.133.210:5037"
     },
     "IIS Express": {
       "commandName": "IISExpress",
