@@ -25,7 +25,7 @@
         "ASPNETCORE_ENVIRONMENT": "Production",
         "ConnectionStrings__PostgreSQL": "Host=161.67.133.210; Database=mydatabase; Username=myuser; Password=mypassword",
         "RabbitMQ__HostName": "127.0.0.1",
-        "MQTT__Server": "161.67.133.210",
+        "MQTT__Server": "emqx",
         "MQTT__Port": "1883",
         "MQTT__UserName": "admin",
         "MQTT__Password": "public",
