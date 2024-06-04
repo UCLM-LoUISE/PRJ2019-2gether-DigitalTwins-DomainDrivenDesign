@@ -43,6 +43,7 @@ services:
     ports:
       - "18083:18083"
       - "8083:8083"
+      - "1883:1883"
   
   api-flask:
     image: api-flask

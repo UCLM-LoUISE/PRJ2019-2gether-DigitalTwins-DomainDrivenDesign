@@ -26,11 +26,11 @@
         "ConnectionStrings__PostgreSQL": "Host=161.67.133.210; Database=mydatabase; Username=myuser; Password=mypassword",
         "RabbitMQ__HostName": "localhost",
         "MQTT__Server": "127.0.0.1",
-        "MQTT__Port": "8085",
+        "MQTT__Port": "1883",
         "MQTT__UserName": "admin",
         "MQTT__Password": "public",
         "API__URL": "http://161.67.133.210:8081/stresslevel"
-      },
+      }, 
       "dotnetRunMessages": true,
       "applicationUrl": "https://161.67.133.210:8055;http://161.67.133.210:5037"
     },
