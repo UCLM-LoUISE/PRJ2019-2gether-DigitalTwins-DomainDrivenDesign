@@ -79,6 +79,11 @@ namespace ChildHDT.Infrastructure.EventSourcing.Registries
 
         public void ReceiveEvent(T eventData)
         {
+            if (Events.Count >= 50)
+            {
+                Events.Clear();
+            }
+
             Events.Add(eventData);
         }
 

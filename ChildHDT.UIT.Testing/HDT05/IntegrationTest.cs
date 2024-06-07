@@ -77,8 +77,8 @@ namespace ChildHDT.UIT.Testing.HDT05
         }
 
         [TestMethod]
-        [Ignore("This test is ignored because running it requires starting the API-FLASK service, which cannot be mocked.")]
-        public async Task TestMethod()
+        //[Ignore("This test is ignored because running it requires starting the API-FLASK service, which cannot be mocked.")]
+        public async Task StressCalculationTest()
         {
             // ARRANGE
 
@@ -115,10 +115,10 @@ namespace ChildHDT.UIT.Testing.HDT05
 
             for (int i = 1; i <= 5; i++)
             {
-                victimLatitude += 0.00001 * i;
-                victimLongitude += 0.00001 * i;
-                bullyLatitude += 0.00002 * i;
-                bullyLongitude += 0.00002 * i;
+                victimLatitude += 0.001 * i;
+                victimLongitude += 0.001 * i;
+                bullyLatitude += 0.002 * i;
+                bullyLongitude += 0.002 * i;
                 victimOrientationAngle = (victimOrientationAngle + 5) % 360;
                 victimOrientationScore = (victimOrientationScore + 1) % 10;
                 bullySpeed = (bullySpeed + 1) % 10;
