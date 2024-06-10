@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ChildHDT.Domain.ValueObjects.Bully" Collapsed="true">
+    <Position X="9.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>DomainLayer\Bully.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.Entities.Child" Collapsed="true">
+    <Position X="9.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAAAAACAQEEABAAwABQAAAAAAAAIAAAQAAAA=</HashCode>
+      <FileName>DomainLayer\Child.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.Factory.FactoryChild" Collapsed="true">
+    <Position X="7.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAgBAAAAAAAAAAAAAgAAAAAAAAAgAAA=</HashCode>
+      <FileName>DomainLayer\FactoryChild.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.DomainServices.FieldOfViewService" Collapsed="true">
+    <Position X="14.75" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\FieldOfViewService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.Location" Collapsed="true">
+    <Position X="11.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAgAgIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\Location.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.NonToMObserver" Collapsed="true">
+    <Position X="6.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\NonToMObserver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.Observer" Collapsed="true">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\Observer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.Orientation" Collapsed="true">
+    <Position X="11.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAgAAIAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>DomainLayer\Orientation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.DomainServices.ProximityService" Collapsed="true">
+    <Position X="13" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAACAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\ProximityService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.Role" Collapsed="true">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAQAAAAACAAAAAAAAAAAAIAAAQAAAA=</HashCode>
+      <FileName>DomainLayer\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RoleConverterHelper" Collapsed="true">
+    <Position X="14.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAACAAAAA=</HashCode>
+      <FileName>DomainLayer\RoleConverterHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.SpeedKMH" Collapsed="true">
+    <Position X="13" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\SpeedKMH.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.SpeedMS" Collapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\SpeedMS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.Stress" Collapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAEAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\Stress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.ToMObserver" Collapsed="true">
+    <Position X="8.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\ToMObserver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Domain.ValueObjects.Victim" Collapsed="true">
+    <Position X="11.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\Victim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ChildHDT.Domain.ValueObjects.IFeatures" Collapsed="true">
+    <Position X="15" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\IFeatures.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ChildHDT.Domain.DomainServices.IMessaging" Collapsed="true">
+    <Position X="15" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\IMessaging.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ChildHDT.Domain.DomainServices.INotificationHandler" Collapsed="true">
+    <Position X="15" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAEQAA=</HashCode>
+      <FileName>DomainLayer\INotificationHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ChildHDT.Domain.DomainServices.IStressService" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainLayer\IStressService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
