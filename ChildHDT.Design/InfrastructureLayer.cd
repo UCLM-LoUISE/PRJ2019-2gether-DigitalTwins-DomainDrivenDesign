@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ChildHDT.Infrastructure.InfrastructureServices.Context.ChildContext">
+    <Position X="12" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\ChildContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Events.Event">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Registries.EventStore&lt;T&gt;">
+    <Position X="7.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACAUAEgAAAAAAAAAAgAAAAAAAAgAAABACAA=</HashCode>
+      <FileName>InfrastructureLayer\EventStore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Events.LocationEvent">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\LocationEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Registries.LocationRegistry">
+    <Position X="10" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\LocationRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.InfrastructureServices.Messaging">
+    <Position X="12" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAEABAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\Messaging.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Events.OrientationEvent">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\OrientationEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Registries.OrientationRegistry">
+    <Position X="8" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\OrientationRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.IntegrationServices.PWAFeatures">
+    <Position X="9.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAIAIAAAABAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\PWAFeatures.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.IntegrationServices.PWAStressService">
+    <Position X="5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAiAAAAQAAAQAABAAAAAAAAgAACAAAiAAAEAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\PWAStressService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.InfrastructureServices.RepositoryChild">
+    <Position X="3.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEYAAAAAAAAAAAQAAgAAAAAAAAEBgAgAAgEBAgAAAYI=</HashCode>
+      <FileName>InfrastructureLayer\RepositoryChild.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Events.SpeedEvent">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <InheritanceLine Type="ChildHDT.Infrastructure.EventSourcing.Events.Event" FixedToPoint="true">
+      <Path>
+        <Point X="7.75" Y="3.055" />
+        <Point X="7.75" Y="3.26" />
+        <Point X="4.812" Y="3.26" />
+        <Point X="4.812" Y="3.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\SpeedEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Registries.SpeedRegistry">
+    <Position X="4.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\SpeedRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Events.StressEvent">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\StressEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.EventSourcing.Registries.StressRegistry">
+    <Position X="6.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\StressResgistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChildHDT.Infrastructure.InfrastructureServices.Context.UnitOfwork">
+    <Position X="12" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\UnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ChildHDT.Infrastructure.InfrastructureServices.Context.IUnitOfwork">
+    <Position X="12" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InfrastructureLayer\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
