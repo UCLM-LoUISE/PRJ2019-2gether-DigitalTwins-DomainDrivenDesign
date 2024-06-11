@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
 using System.Net.Http;
 using ChildHDT.Infrastructure.InfrastructureServices;
 using RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace ChildHDT.Infrastructure.IntegrationServices
 {

@@ -1,6 +1,7 @@
 ﻿using ChildHDT.Domain.DomainServices;
 using ChildHDT.Domain.Entities;
 using ChildHDT.Infrastructure.InfrastructureServices;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace ChildHDT.API.ApplicationServices
