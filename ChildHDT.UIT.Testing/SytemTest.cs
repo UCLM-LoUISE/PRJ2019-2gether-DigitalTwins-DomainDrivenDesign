@@ -1,8 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+ï»¿using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChildHDT.Domain.Entities;
 using ChildHDT.Domain.ValueObjects;
@@ -17,11 +15,12 @@ using Microsoft.Extensions.Hosting;
 using ChildHDT.API.ApplicationServices;
 using ChildHDT.Domain.DomainServices;
 using ChildHDT.Infrastructure.EventSourcing.Events;
+using Microsoft.EntityFrameworkCore;
 
-namespace ChildHDT.UIT.Testing.HDT05
+namespace ChildHDT.UIT.Testing
 {
     [TestClass]
-    public class IntegrationTest
+    public class SystemTest
     {
         private RepositoryChild _repositoryChild;
         private IUnitOfwork _unitOfWork;
@@ -29,32 +28,32 @@ namespace ChildHDT.UIT.Testing.HDT05
         private IConfiguration _configuration;
         private IHost _host;
         private IStressService _stressService;
-        private INotificationHandler _notificatonHandler;
+        private INotificationHandler _notificationHandler;
         private MqttClientOptions _mqttOptions;
 
         [TestInitialize]
         public async Task SetUp()
         {
-            var options = new DbContextOptionsBuilder<ChildContext>()
-                .UseInMemoryDatabase(databaseName: "ChildTestDb")
-                .Options;
-
-            _context = new ChildContext(options);
-            _unitOfWork = new UnitOfwork(_context);
-
-            var inMemorySettings = new Dictionary<string, string> {
-                {"MQTT:Server", "localhost"},
+            var inMemorySettings = new Dictionary<string, string>
+            {
+                {"ASPNETCORE_ENVIRONMENT", "Production"},
+                {"ConnectionStrings:PostgreSQL", "Host=161.67.133.210;Database=mydatabase;Username=myuser;Password=mypassword"},
+                {"RabbitMQ:HostName", "161.67.133.210"},
+                {"MQTT:Server", "161.67.133.210"},
                 {"MQTT:Port", "1883"},
-                {"MQTT:UserName", "user"},
-                {"MQTT:Password", "password"},
-                {"ConnectionStrings:PostgreSQL", "Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword"},
-                {"RabbitMQ:HostName", "localhost"},
-                {"API:URL", "http://localhost:8081/stresslevel" }
+                {"MQTT:UserName", "admin"},
+                {"MQTT:Password", "public"},
+                {"API:URL", "http://161.67.133.210:8081/stresslevel"}
             };
 
-            _configuration = new ConfigurationBuilder()
+            var configurationBuilder = new ConfigurationBuilder()
                 .AddInMemoryCollection(inMemorySettings)
                 .Build();
+
+            _configuration = configurationBuilder;
+
+            var optionsBuilder = new DbContextOptionsBuilder<ChildContext>()
+                .UseNpgsql(_configuration.GetConnectionString("PostgreSQL"));
 
             _mqttOptions = new MqttClientOptionsBuilder()
                 .WithClientId("Test")
@@ -63,28 +62,33 @@ namespace ChildHDT.UIT.Testing.HDT05
                 .WithCleanSession()
                 .Build();
 
+            _context = new ChildContext(optionsBuilder.Options);
+            _unitOfWork = new UnitOfwork(_context);
+
             _repositoryChild = new RepositoryChild(_unitOfWork, _configuration);
-            _notificatonHandler = new NotificationHandler(_configuration);
-            _stressService = new PWAStressService(_notificatonHandler, _repositoryChild, _configuration);
+            _notificationHandler = new NotificationHandler(_configuration);
+            _stressService = new PWAStressService(_notificationHandler, _repositoryChild, _configuration);
 
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
                     services.AddSingleton(_stressService);
-                    services.AddSingleton(_notificatonHandler);
+                    services.AddSingleton(_notificationHandler);
                     services.AddSingleton(_context);
-                    services.AddSingleton(_unitOfWork);
+                    services.AddSingleton<IUnitOfwork>(_unitOfWork);
                     services.AddSingleton(_repositoryChild);
                     services.AddSingleton(_configuration);
                     services.AddHostedService<StressMonitoringService>();
                 })
                 .Build();
+
+
             await _host.StartAsync();
         }
 
         [TestMethod]
         [TestCategory("ExternalService")]
-        public async Task StressCalculationTest()
+        public async Task SystemTesting()
         {
             // ARRANGE
 
@@ -99,11 +103,11 @@ namespace ChildHDT.UIT.Testing.HDT05
             var factory = new MqttFactory();
             var mqttClient = factory.CreateMqttClient();
 
-            var victim = new Child("Peter", "Parker", 10, "4ºB");
+            var victim = new Child("Peter", "Parker", 10, "4ÂºB");
             victim.AssignRole(new Victim());
             await _repositoryChild.Add(victim);
 
-            var bully = new Child("Harry", "Osborn", 10, "4ºB");
+            var bully = new Child("Harry", "Osborn", 10, "4ÂºB");
             bully.AssignRole(new Bully());
             await _repositoryChild.Add(bully);
 
@@ -161,7 +165,7 @@ namespace ChildHDT.UIT.Testing.HDT05
                 await mqttClient.PublishAsync(m_v_location);
                 await mqttClient.PublishAsync(m_b_location);
                 await mqttClient.PublishAsync(m_b_speed);
-                await mqttClient.PublishAsync(m_v_orientation) ;
+                await mqttClient.PublishAsync(m_v_orientation);
 
                 await Task.Delay(1000);
             }

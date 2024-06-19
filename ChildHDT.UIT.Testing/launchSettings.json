@@ -1,0 +1,62 @@
+{
+  "profiles": {
+    "Development": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__PostgreSQL": "Host=localhost; Database=mydatabase; Username=myuser; Password=mypassword",
+        "RabbitMQ__HostName": "localhost",
+        "MQTT__Server": "127.0.0.1",
+        "MQTT__Port": "1883",
+        "MQTT__UserName": "admin",
+        "MQTT__Password": "public",
+        "API__URL": "http://localhost:8081/stresslevel"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7221;http://localhost:5037"
+    },
+    "Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "ConnectionStrings__PostgreSQL": "Host=161.67.133.210; Database=mydatabase; Username=myuser; Password=mypassword",
+        "RabbitMQ__HostName": "localhost",
+        "MQTT__Server": "127.0.0.1",
+        "MQTT__Port": "1883",
+        "MQTT__UserName": "admin",
+        "MQTT__Password": "public",
+        "API__URL": "http://161.67.133.210:8081/stresslevel"
+      }, 
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://161.67.133.210:8055;http://161.67.133.210:5037"
+    },
+    "IIS Express": 
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:42392",
+      "sslPort": 44323
+    }
+  }
+}
