@@ -32,7 +32,6 @@ namespace ChildHDT.UIT.Testing.HDT05
         private INotificationHandler _notificatonHandler;
 
         [TestInitialize]
-        [Ignore("This test is ignored because running it requires starting the API-FLASK service, which cannot be mocked.")]
         public async Task SetUp()
         {
             var options = new DbContextOptionsBuilder<ChildContext>()
@@ -77,7 +76,8 @@ namespace ChildHDT.UIT.Testing.HDT05
         }
 
         [TestMethod]
-        [Ignore("This test is ignored because running it requires starting the API-FLASK service, which cannot be mocked.")]
+        //[Ignore("This test is ignored because running it requires starting the API-FLASK service, which cannot be mocked.")]
+        [TestCategory("ExternalService")]
         public async Task StressCalculationTest()
         {
             // ARRANGE
@@ -162,7 +162,7 @@ namespace ChildHDT.UIT.Testing.HDT05
                 await mqttClient.PublishAsync(m_v_location);
                 await mqttClient.PublishAsync(m_b_location);
                 await mqttClient.PublishAsync(m_b_speed);
-                await mqttClient.PublishAsync(m_v_orientation);
+                await mqttClient.PublishAsync(m_v_orientation) ;
 
                 await Task.Delay(1000);
             }
