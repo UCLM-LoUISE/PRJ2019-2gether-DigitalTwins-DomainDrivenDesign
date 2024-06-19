@@ -76,7 +76,6 @@ namespace ChildHDT.UIT.Testing.HDT05
         }
 
         [TestMethod]
-        //[Ignore("This test is ignored because running it requires starting the API-FLASK service, which cannot be mocked.")]
         [TestCategory("ExternalService")]
         public async Task StressCalculationTest()
         {
