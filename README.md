@@ -1,7 +1,10 @@
 # Domain-Driven design for development of Human Digital Twins 
 by Julián Abellán Abad
 
-This project focuses on creating a Human Digital Twin to evaluate bullying among children in school playgrounds.
+This project focuses on creating a Human Digital Twin to evaluate bullying among children in school playgrounds. It has been funded by 2gether Project.
+
+![2gether](https://github.com/UCLM-LoUISE/PRJ2019-2gether-Noelia/blob/main/Images%20Plugin_Readme/2gether.png)
+
 
 ## Project Overview
 
